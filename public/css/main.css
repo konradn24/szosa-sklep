@@ -1,0 +1,84 @@
+* {
+    --primary-color: #ffffffde;
+    --secondary-color: #ff7272;
+    --primary-bg: #333;
+}
+
+body {
+    font-family: 'Atkinson Hyperlegible';
+	font-size: 18px;
+    margin: 0;
+    background-color: var(--primary-bg);
+    color: var(--primary-color);
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.product-tiles-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.product-tile {
+    width: 25%;
+    height: auto;
+    margin: 10px 0;
+    text-align: center;
+}
+
+@media only screen and (max-width: 700px) {
+    .product-tile {
+        width: 80%;
+        margin: 20px auto;
+    }
+
+    .mobile-text-center {
+        text-align: center;
+    }
+}
+
+.product-tile img {
+    width: 80%;
+    height: auto;
+}
+
+.product-tile a {
+    text-decoration: none;
+}
+
+.product-tile p {
+    margin: 0;
+    font-size: 20px;
+    color: var(--primary-color);
+}
+
+.header {
+    letter-spacing: 3px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-primary {
+    color: var(--primary-color);
+}
+
+.text-secondary {
+    color: var(--secondary-color);
+}
+
+.text-red {
+    color: #f00;
+}

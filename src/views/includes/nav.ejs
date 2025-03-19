@@ -1,0 +1,22 @@
+<nav class="top-nav">
+    <ul class="normal-nav">
+        <li><a href="/">Strona główna</a></li>
+        <li><a href="/rowery">Rowery</a></li>
+        <li><a href="/akcesoria">Akcesoria</a></li>
+        <li><a href="/odziez">Odzież</a></li>
+        <li><a href="/trenazery">Trenażery</a></li>
+    </ul>
+
+    <ul class="auth-nav">
+        <% if(user) { %>
+            <% if(user.admin) { %>
+                <li><a href="/zarzadzanie-sklepem">Zarządzanie sklepem</a></li>
+            <% } %>
+            <li><a href="/moje-konto">Moje konto</a></li>
+            <li><a href="#" id="nav-logout">Wyloguj się</a></li>
+        <% } else { %>
+            <li><a href="/logowanie">Zaloguj się</a></li>
+            <li><a href="/rejestracja">Zarejestruj się</a></li>
+        <% } %>
+    </ul>
+</nav>

@@ -5,7 +5,7 @@ module.exports = function buildMakeProduct() {
         id,
         name,
         description = null,
-        image_url = null,
+        imageUrl = null,
         category = null,
         price,
         amount
@@ -37,6 +37,6 @@ module.exports = function buildMakeProduct() {
             throw new AppError(error, "Product must have a valid amount.", ['Amount'], amount, isErrorCritical);
         }
 
-        return { id, name, description, image_url, category, price, amount };
+        return { id, name, description, imageUrl, category, price, amount };
     }
 }

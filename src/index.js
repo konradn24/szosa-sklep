@@ -26,11 +26,11 @@ app.use(session({
 
 // app.use("/", loggingMiddleware.log);
 
-// const rootRouter = require("./routers/root");
+const { root } = require("./routers");
 // const authRouter = require('./routers/auth');
 // const dashboardRouter = require("./routers/dashboard");
 
-// app.use("/", rootRouter);
+app.use("/", root);
 // app.use("/auth", authRouter);
 // app.use("/dashboard", securityMiddleware.verifyAccess, dashboardRouter);
 
