@@ -19,6 +19,7 @@ module.exports = function makeListProducts({ productsDb }) {
                     id: result.rows[i].id,
                     name: result.rows[i].name,
                     description: result.rows[i].description,
+                    url: result.rows[i].url,
                     imageUrl: result.rows[i].image_url,
                     category: result.rows[i].category,
                     price: result.rows[i].price,

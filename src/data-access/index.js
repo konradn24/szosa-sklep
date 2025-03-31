@@ -15,7 +15,8 @@ const connection = mysql.createPool({
 }).promise();
 
 async function checkConnection() {
-    await connection.getConnection();
+    const test = await connection.getConnection();
+    test.release();
 }
 
 async function makeDb() {

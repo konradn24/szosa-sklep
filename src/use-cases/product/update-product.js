@@ -20,6 +20,7 @@ module.exports = function makeUpdateProduct({ productsDb }) {
             id: product.id,
             name: product.name,
             description: product.description,
+            url: product.url,
             imageUrl: product.image_url,
             category: product.category,
             price: product.price,

@@ -1,13 +1,13 @@
 const { makeProduct } = require("../../entities");
 const { AppError, errors } = require("../../utils/errors");
 
-module.exports = function makeGetProduct({ productsDb }) {
-    return async function getProduct({ id }) {
-        const result = await productsDb.findById({ id });
+module.exports = function makeGetProductByUrl({ productsDb }) {
+    return async function getProductByUrl({ url }) {
+        const result = await productsDb.findByUrl({ url });
         const product = result.rows[0];
 
         if(!product) {
-            throw new AppError(errors.notFound, "Product not found.", ['ID'], [id]);
+            throw new AppError(errors.notFound, "Product not found.", ['URL'], [url]);
         }
 
         return makeProduct({

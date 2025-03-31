@@ -2,6 +2,7 @@ module.exports = function makeProductsDb({ makeQuery }) {
     return Object.freeze({
         findAll,
         findById,
+        findByUrl,
         insert,
         update,
         remove
@@ -15,15 +16,19 @@ module.exports = function makeProductsDb({ makeQuery }) {
         return await makeQuery({ sql: "SELECT * FROM products WHERE id=?", params: [id] });
     }
 
+    async function findByUrl({ url }) {
+        return await makeQuery({ sql: "SELECT * FROM products WHERE url=?", params: [url] });
+    }
+
     async function insert({ product }) {
-        return await makeQuery({ sql: "INSERT INTO products (name, description, image_url, category, price, amount) VALUES (?,?,?,?,?,?)",
-            params: [product.name, product.description, product.imageUrl, product.category, product.price, product.amount]
+        return await makeQuery({ sql: "INSERT INTO products (name, description, url, image_url, category, price, amount) VALUES (?,?,?,?,?,?,?)",
+            params: [product.name, product.description, product.url, product.imageUrl, product.category, product.price, product.amount]
         });
     }
 
     async function update({ product }) {
-        return await makeQuery({ sql: "UPDATE products SET name=?,description=?,image_url=?,category=?,price=?,amount=? WHERE id=?",
-            params: [product.name, product.description, product.imageUrl, product.category, product.price, product.amount, product.id]
+        return await makeQuery({ sql: "UPDATE products SET name=?,description=?,url=?,image_url=?,category=?,price=?,amount=? WHERE id=?",
+            params: [product.name, product.description, product.url, product.imageUrl, product.category, product.price, product.amount, product.id]
         });
     }
 

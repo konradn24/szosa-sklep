@@ -5,6 +5,7 @@ module.exports = function buildMakeProduct() {
         id,
         name,
         description = null,
+        url,
         imageUrl = null,
         category = null,
         price,
@@ -29,6 +30,14 @@ module.exports = function buildMakeProduct() {
             throw new AppError(error, "Product's name must contain 2-256 characters.", ['Name'], [name], isErrorCritical);
         }
 
+        if(!url) {
+            throw new AppError(error, "Product must have a URL.", null, null, isErrorCritical);
+        }
+
+        if(url.length < 2 || url.length > 64) {
+            throw new AppError(error, "Product's URL must contain 2-64 characters.", ['URL'], [url], isErrorCritical);
+        }
+
         if(isNaN(parseInt(price))) {
             throw new AppError(error, "Product must have a valid price.", ['Price'], price, isErrorCritical);
         }
@@ -37,6 +46,6 @@ module.exports = function buildMakeProduct() {
             throw new AppError(error, "Product must have a valid amount.", ['Amount'], amount, isErrorCritical);
         }
 
-        return { id, name, description, imageUrl, category, price, amount };
+        return { id, name, description, url, imageUrl, category, price, amount };
     }
 }

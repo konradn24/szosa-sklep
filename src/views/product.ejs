@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('includes/header', { title: product.name }); %>
+    </head>
+
+    <body>
+        <%- include('includes/nav', { user }); %>
+
+        <div class="container">
+            <main>
+                <h1 class="header text-center"><%= product.name %></h1>
+
+                <% if(product.imageUrl) { %>
+                    <img src="<%= product.imageUrl %>" alt="Obrazek poglądowy dla <%= product.name %>">
+                <% } %>
+
+                <h3><%= product.price %> PLN</h3>
+
+                <form method="POST">
+                    <button>Dodaj do koszyka</button>
+                    <input type="number" min="1" max="<%= product.amount %>" value="1">
+                </form>
+
+                <p>Pozostało w magazynie: <%= product.amount %></p>
+
+                <p style="margin-top: 40px;"><strong>Opis:</strong> <%= product.description || 'Brak informacji.' %></p>
+            </main>
+        </div>
+    </body> 
+</html>
