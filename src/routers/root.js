@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
     });
 });
 
-router.get("/:productUrl", async (req, res) => {
+router.get("/product/:productUrl", async (req, res) => {
     let products = [];
 
     try {

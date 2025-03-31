@@ -1,0 +1,43 @@
+.image {
+    display: block;
+    width: 50%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.price {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+.price h3 {
+    margin: 0;
+    margin-right: 30px;
+}
+
+.price p {
+    margin: 0;
+}
+
+.price button {
+    margin-right: 10px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+form .amount {
+    margin-top: 10px;
+}
+
+.product-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+/* .product-panel > section {
+    width: 50%;
+} */
