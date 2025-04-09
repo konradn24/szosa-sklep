@@ -2,8 +2,8 @@ const { makeUser } = require("../../entities");
 const { AppError, errors } = require("../../utils/errors");
 
 module.exports = function makeGetUserByLogin({ usersDb }) {
-    return async function getUserByLogin({ login }) {
-        const result = await usersDb.findByLogin({ login });
+    return async function getUserByLogin({ login, name }) {
+        const result = await usersDb.findByLogin({ login, name });
         const user = result.rows[0];
 
         if(!user) {
@@ -15,6 +15,7 @@ module.exports = function makeGetUserByLogin({ usersDb }) {
             login: user.login,
             password: user.password,
             name: user.name,
+            verified: user.verified,
             admin: user.admin
         });
     }

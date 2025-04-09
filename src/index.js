@@ -4,8 +4,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-// const loggingMiddleware = require('./middlewares/logging');
-// const securityMiddleware = require('./middlewares/security');
+const securityMiddleware = require('./middlewares/security');
 const logger = require('./utils/logger');
 const { checkConnection } = require('./data-access');
 
@@ -24,15 +23,12 @@ app.use(session({
     rolling: true
 }));
 
-// app.use("/", loggingMiddleware.log);
-
-const { root } = require("./routers");
-// const authRouter = require('./routers/auth');
-// const dashboardRouter = require("./routers/dashboard");
+const { root, auth, admin } = require("./routers");
 
 app.use("/", root);
+app.use("/auth", auth);
+app.use("/zarzadzanie-sklepem", securityMiddleware.checkAdminAccess, admin);
 // app.use("/auth", authRouter);
-// app.use("/dashboard", securityMiddleware.verifyAccess, dashboardRouter);
 
 async function start() {
     try {

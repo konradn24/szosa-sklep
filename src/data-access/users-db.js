@@ -17,8 +17,8 @@ module.exports = function makeUsersDb({ makeQuery }) {
         return await makeQuery({ sql: "SELECT * FROM users WHERE id=?", params: [id] });
     }
 
-    async function findByLogin({ login }) {
-        return await makeQuery({ sql: "SELECT * FROM users WHERE login=? LIMIT 1", params: [login] });
+    async function findByLogin({ login, name }) {
+        return await makeQuery({ sql: "SELECT * FROM users WHERE login=? OR name=? LIMIT 1", params: [login, name] });
     }
 
     async function findByCredentials({ login, password }) {
@@ -32,8 +32,8 @@ module.exports = function makeUsersDb({ makeQuery }) {
     }
 
     async function update({ user }) {
-        return await makeQuery({ sql: "UPDATE users SET password=?, name=?, admin=? WHERE id=?",
-            params: [user.password, user.name, user.admin, user.id]
+        return await makeQuery({ sql: "UPDATE users SET password=?, name=?, verified=?, admin=? WHERE id=?",
+            params: [user.password, user.name, user.verified, user.admin, user.id]
         });
     }
 

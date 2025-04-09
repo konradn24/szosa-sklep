@@ -20,6 +20,7 @@ module.exports = function makeListUsers({ usersDb }) {
                     login: result.rows[i].login,
                     password: result.rows[i].password,
                     name: result.rows[i].name,
+                    verified: result.rows[i].verified,
                     admin: result.rows[i].admin
                 }));
             } catch(error) {

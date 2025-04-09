@@ -15,6 +15,7 @@ module.exports = function makeGetUser({ usersDb }) {
             login: user.login,
             password: user.password,
             name: user.name,
+            verified: user.verified,
             admin: user.admin
         });
     }

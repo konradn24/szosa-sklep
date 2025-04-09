@@ -6,6 +6,7 @@ module.exports = function buildMakeUser() {
         login,
         password = null,
         name,
+        verified,
         admin
     } = {}, clientProvidedData = false) {
         const error = clientProvidedData ? errors.invalidData : errors.schemaError;
@@ -35,10 +36,14 @@ module.exports = function buildMakeUser() {
             throw new AppError(error, "User's name must contain 2-128 characters.", ['Name'], [name], isErrorCritical);
         }
 
-        if(admin !== true && admin !== false) {
-            throw new AppError(error, "User's admin property must be a boolean value.", ['Admin'], [admin])
+        if(verified !== true && verified !== false) {
+            throw new AppError(error, "User's verified property must be a boolean value.", ['Verified'], [verified], isErrorCritical);
         }
 
-        return { id, login, password, name, admin };
+        if(admin !== true && admin !== false) {
+            throw new AppError(error, "User's admin property must be a boolean value.", ['Admin'], [admin], isErrorCritical);
+        }
+
+        return { id, login, password, name, verified, admin };
     }
 }

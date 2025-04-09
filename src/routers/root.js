@@ -1,5 +1,7 @@
 const express = require("express");
+const { createHash } = require("crypto");
 
+const { listUsers } = require("../use-cases/user")
 const { listProducts } = require("../use-cases/product");
 const logger = require("../utils/logger");
 const { errors } = require("../utils/errors");
@@ -21,7 +23,43 @@ router.get("/", async (req, res) => {
     });
 });
 
-router.get("/product/:productUrl", async (req, res) => {
+router.get("/logowanie", (req, res) => {
+    if(req.session.user) {
+        return res.redirect('/');
+    }
+
+    res.render("auth/login", {
+        path: '../'
+    });
+});
+
+router.get("/rejestracja", async (req, res) => {
+    if(req.session.user) {
+        return res.redirect('/');
+    }
+
+    let users = [];
+
+    try {
+        users = await listUsers();
+    } catch(error) {
+        console.error(error);
+    }
+
+    for(const user of users) {
+        delete user.password;
+        delete user.admin;
+        user.name = createHash('sha256').update(user.name).digest('hex');
+        user.login = createHash('sha256').update(user.login).digest('hex');
+    }
+
+    res.render("auth/register", {
+        path: '../',
+        users: users
+    });
+});
+
+router.get("/produkt/:productUrl", async (req, res) => {
     let products = [];
 
     try {

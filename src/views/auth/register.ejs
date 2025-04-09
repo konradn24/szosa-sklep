@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <%- include('../includes/header', { title: "Logowanie" }); %>
+
+        <link rel="stylesheet" href="<%= path %>css/form.css">
+    </head>
+
+    <body>
+        <%- include('../includes/nav', { user: null }); %>
+
+        <div class="container">
+            <main class="text-center">
+                <h1 class="header">Zarejestruj się</h1>
+
+                <form method="post" action="/auth/login" class="wider-inputs-1">
+                    <div class="form-input">
+                        <label for="name">Nazwa użytkownika:</label>
+                        <input type="text" name="name" id="name" required>
+                    </div>
+
+                    <div id="name-info" class="text-red display-none"></div>
+    
+                    <div class="form-input">
+                        <label for="login">Adres E-mail:</label>
+                        <input type="email" name="login" id="login" required>
+                    </div>
+
+                    <div id="login-info" class="text-red display-none"></div>
+
+                    <div class="form-input">
+                        <label for="password1">Hasło:</label>
+                        <input type="password" name="password1" id="password1" required>
+                    </div>
+    
+                    <div class="form-input">
+                        <label for="password2">Powtórz hasło:</label>
+                        <input type="password" name="password2" id="password2" required>
+                    </div>
+
+                    <div id="password-info" class="text-red display-none" style="margin-bottom: 10px;"></div>
+
+                    <button id="submit">Zarejestruj się</button>
+                </form>
+            </main>
+        </div>
+
+        <script>
+            const users = JSON.parse("<%- JSON.stringify(users) %>");
+        </script>
+
+        <script src="js/register-form.js"></script>
+    </body> 
+</html>

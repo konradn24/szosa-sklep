@@ -110,6 +110,10 @@ body {
     color: #f00;
 }
 
+.display-none {
+    display: none;
+}
+
 button {
     background-color: var(--dark-primary-color);
     border: none;

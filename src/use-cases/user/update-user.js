@@ -21,6 +21,7 @@ module.exports = function makeUpdateUser({ usersDb }) {
             login: user.login,
             password: user.password,
             name: user.name,
+            verified: user.verified,
             admin: user.admin
         });
     }

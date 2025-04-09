@@ -1,0 +1,25 @@
+.form-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.form-input label {
+    display: block;
+    min-width: 120px;
+    text-align: right;
+    margin-right: 10px;
+    line-height: 26px;
+}
+
+.wider-inputs-1 .form-input label {
+    min-width: 150px;
+}
+
+input[type="email"], input[type="password"], input[type="text"] {
+    border-radius: 5px;
+    border: 1px solid #000;
+    padding: 6px;
+    font-size: 14px;
+}
