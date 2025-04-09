@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <%- include('includes/header', { title: product.name }); %>
-        <link rel="stylesheet" href="css/product.css">
+        <%- include('includes/header', { title: product.name, path }); %>
+        <link rel="stylesheet" href="<%= path %>css/product.css">
     </head>
 
     <body>
@@ -10,31 +10,32 @@
 
         <div class="container">
             <main>
-                <h1 class="header text-center"><%= product.name %></h1>
-
                 <% if(product.imageUrl) { %>
-                    <img class="image" src="img/<%= product.imageUrl %>" alt="Obrazek poglądowy dla <%= product.name %>">
+                    <img class="image" src="<%= path %>img/<%= product.imageUrl %>" alt="Obrazek poglądowy dla <%= product.name %>">
                 <% } %>
+
+                <h1 class="header text-center"><%= product.name %></h1>
 
                 <div class="product-panel">
                     <section>
-                        <div class="price">
+                        <div class="row">
                             <h3><%= (Math.round(product.price * 100) / 100).toFixed(2); %> PLN</h3>
-                            <p>Pozostało w magazynie: <%= product.amount %></p>
+
+                            <div class="content-divide-vertical"></div>
+
+                            <form method="POST">
+                                <button>Dodaj do koszyka</button>
+    
+                                <label>Ilość szt.:
+                                    <input type="number" min="1" max="<%= product.amount %>" value="1">
+                                </label>
+                            </form>
                         </div>
     
-                        <form method="POST">
-                            <div>
-                                <button>Dodaj do koszyka</button>
-                            </div>
-    
-                            <div class="amount"><label>Ilość szt.:
-                                <input type="number" min="1" max="<%= product.amount %>" value="1">
-                            </label></div>
-                        </form>
-                    </section>
-                    
-                    <section>
+                        <p class="amount">Pozostało w magazynie: <%= product.amount %></p>
+
+                        <div class="product-divide"></div>
+
                         <p style="margin-top: 40px;"><strong>Opis:</strong> <%= product.description || 'Brak informacji.' %></p>
                     </section>
                 </div>

@@ -12,6 +12,9 @@
             <% } %>
 
             <p><%= product.name %></p>
+            <p><%= (Math.round(product.price * 100) / 100).toFixed(2); %> PLN</p>
+
+            <div class="tile-overlay"></div>
         </a>
     <% } %>
 <% } else { %>

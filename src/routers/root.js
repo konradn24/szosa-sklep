@@ -40,6 +40,7 @@ router.get("/product/:productUrl", async (req, res) => {
     }
 
     res.render("product", {
+        path: '../',
         user: req.session.user,
         products: products,
         product: product

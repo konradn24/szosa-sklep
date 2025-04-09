@@ -38,7 +38,7 @@ module.exports = function buildMakeProduct() {
             throw new AppError(error, "Product's URL must contain 2-64 characters.", ['URL'], [url], isErrorCritical);
         }
 
-        if(isNaN(parseInt(price))) {
+        if(isNaN(parseFloat(price))) {
             throw new AppError(error, "Product must have a valid price.", ['Price'], price, isErrorCritical);
         }
 
