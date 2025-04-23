@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <%- include('../../includes/header', { title: "Zarządzanie sklepem" }); %>
+    </head>
+
+    <body>
+        <%- include('../../includes/nav', { user }); %>
+
+        <div class="container">
+            <main class="text-center">
+                <h1 class="header">Produkty</h1>
+
+                <a href="/zarzadzanie-sklepem/produkty/dodaj">
+                    <button><i class="icon-plus"></i> Dodaj nowy produkt</button>
+                </a>
+
+                <article class="product-tiles-container">
+                    <%- include('../../includes/tiles-admin', { products, max: null }); %>
+                </article>
+            </main>
+        </div>
+    </body> 
+</html>

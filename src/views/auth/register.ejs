@@ -13,7 +13,7 @@
             <main class="text-center">
                 <h1 class="header">Zarejestruj się</h1>
 
-                <form method="post" action="/auth/login" class="wider-inputs-1">
+                <form method="post" action="/auth/register" class="wider-inputs-1">
                     <div class="form-input">
                         <label for="name">Nazwa użytkownika:</label>
                         <input type="text" name="name" id="name" required>
@@ -46,7 +46,7 @@
         </div>
 
         <script>
-            const users = JSON.parse("<%- JSON.stringify(users) %>");
+            const users = JSON.parse('<%- JSON.stringify(users) %>');
         </script>
 
         <script src="js/register-form.js"></script>

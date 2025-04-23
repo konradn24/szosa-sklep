@@ -1,10 +1,14 @@
 const express = require('express');
 const { createHash } = require('crypto');
-const nodemailer = require('nodemailer');
 
 const { AppError, errors } = require('../utils/errors');
-const { authUser, addUser } = require('../use-cases/user');
-const { makeUser } = require('../entities');
+const { getUserByLogin, authUser, addUser, updateUser, removeUser } = require('../use-cases/user');
+const { getVerification, addVerification, removeVerification } = require('../use-cases/verification');
+
+const { makeUser, makeVerification } = require('../entities');
+const { sendMail } = require('../services/mailer');
+
+const logger = require("../services/logger");
 
 const router = express.Router();
 
@@ -22,27 +26,35 @@ router.post('/', async (req, res) => {
     try {
         authenticated = await authUser({ login: login, password: encryptedPassword });
     } catch(error) {
-        console.error(error);
+        logger.error(error);
         return res.redirect(`/logowanie?error=${error.appCode}`);
     }
 
     req.session.user = authenticated;
 
-    return res.redirect('/?action=login&success=0');
+    return res.redirect('/?action=login&success=true');
 });
 
 router.post('/logout', (req, res) => {
     req.session.user = undefined;
 
-    return res.redirect('/');
+    return res.redirect('/?action=logout&success=true');
 });
 
 router.post('/register', async (req, res) => {
-    const userData = req.body.user;
+    if(req.session.user) {
+        return res.redirect('/');
+    }
+
+    const userData = req.body;
 
     if(!userData || typeof userData.login !== 'string') {
         return res.redirect(`/rejestracja?error=${errors.invalidData[0]}`);
     }
+
+    userData.password = userData.password1;
+    delete userData.password1;
+    delete userData.password2;
 
     userData.login = userData.login.toLowerCase();
     userData.password = createHash('sha256').update(userData.password).digest('hex');
@@ -53,7 +65,7 @@ router.post('/register', async (req, res) => {
         userExists = await getUserByLogin({ login: userData.login, name: userData.name });
     } catch(error) {
         if(!(error instanceof AppError) || error.appCode !== errors.notFound[0]) {
-            console.error(error);
+            logger.error(error);
             return res.redirect(`/rejestracja?error=${error.appCode}`);
         }
     }
@@ -68,48 +80,118 @@ router.post('/register', async (req, res) => {
         const user = makeUser({
             login: userData.login,
             password: userData.password,
-            name: userData.name,
-            admin: false
-        });
+            name: userData.name
+        }, true);
 
         result = await addUser({ user });
     } catch(error) {
-        console.error(error);
+        logger.error(error);
         return res.redirect(`/rejestracja?error=${error.appCode}`);
     }
 
     req.session.user = result;
 
-    // TODO generate e-mail verification code and save to db
-    const verificationCode = '000000';
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
 
-    const transporter = nodemailer.createTransport({
-        service: process.env.MAIL_SERVICE,
-        auth: {
-            user: process.env.MAIL_USER,
-            pass: process.env.MAIL_PASS
-        }
-    });
+    let verification;
+
+    try {
+        verification = makeVerification({
+            login: result.login,
+            code: verificationCode
+        }, true);
+
+        verification = await addVerification({ verification });
+    } catch(error) {
+        logger.error(error);
+        return res.redirect(`/rejestracja?error=${error.appCode}`);
+    }
 
     const mailOptions = {
         from: process.env.MAIL_USER,
         to: result.login,
         subject: "Szosa Sklep - weryfikacja adresu E-Mail",
-        html: `<h1>Dziękujemy za rejestrację!</h1><p><a href="localhost:3000/auth/verify?code=${verificationCode}">Zweryfikuj swój adres E-mail klikając w ten link!</a></p>`
+        html: `<h1>Dziękujemy za rejestrację!</h1><p><a href="http://localhost:3000/auth/verify?code=${verificationCode}">Zweryfikuj swój adres E-mail klikając w ten link!</a></p>`
     }
 
-    // TODO sending mail with promise
-    let mailSuccess;
+    const mailSent = await sendMail(mailOptions);
 
-    transporter.sendMail(mailOptions, function(error, info) {
-        if(error) {
-            console.error(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
+    if(!mailSent) {
+        return res.redirect('/?action=login&mail=false');
+    }
 
-    return res.redirect('/?action=login&success=0');
+    return res.redirect('/?action=login&mail=true');
+});
+
+router.get('/verify', async (req, res) => {
+    const code = req.query.code;
+
+    if(!code) {
+        return res.redirect('/?action=verify&success=false');
+    }
+
+    let verification;
+
+    try {
+        verification = await getVerification({ code });
+    } catch(error) {
+        logger.error(error);
+        return res.redirect('/?action=verify&success=false');
+    }
+
+    let user;
+
+    try {
+        user = await getUserByLogin({ login: verification.login });
+    } catch(error) {
+        logger.error(error);
+        return res.redirect('/?action=verify&success=false');
+    }
+
+    user.verified = true;
+
+    let updatedUser;
+
+    try {
+        updatedUser = await updateUser({ user });
+    } catch(error) {
+        logger.error(error);
+        return res.redirect('/?action=verify&success=false');
+    }
+
+    if(req.session.user) {
+        req.session.user = updatedUser;
+    }
+
+    try {
+        await removeVerification({ id: verification.id });
+    } catch(error) {
+        logger.error(`Failed to remove verified user's verification record (ID ${verification.id}): ${error}`);
+    }
+
+    return res.redirect('/?action=verify&success=true');
+});
+
+router.post('/delete-account', async (req, res) => {
+    if(!req.session.user) {
+        return res.redirect('/');
+    }
+
+    let result;
+
+    try {
+        result = await removeUser({ id: req.session.user.id });
+    } catch(error) {
+        logger.error(error);
+        return res.redirect(`/moje-konto?action=delete&error=${error.appCode}`);
+    }
+
+    if(result.deletedCount === 0) {
+        logger.warning(`User of ID ${req.session.user.id} not deleted!`);
+        return res.redirect(`/moje-konto?action=delete&error=${errors.notDeleted}`);
+    }
+
+    return res.redirect('/?action=delete&success=true');
 });
 
 module.exports = router;

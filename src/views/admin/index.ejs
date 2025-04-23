@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <%- include('../includes/header', { title: "Zarządzanie sklepem" }); %>
+    </head>
+
+    <body>
+        <%- include('../includes/nav', { user }); %>
+
+        <div class="container">
+            <main class="text-center">
+                <h1 class="header">Zarządzanie sklepem</h1>
+
+                <a href="/zarzadzanie-sklepem/produkty">
+                    <button>Produkty</button>
+                </a>
+
+                <a href="/zarzadzanie-sklepem/konta-klientow">
+                    <button>Konta klientów</button>
+                </a>
+
+                <a href="/zarzadzanie-sklepem/zamowienia">
+                    <button>Zamówienia</button>
+                </a>
+            </main>
+        </div>
+    </body> 
+</html>

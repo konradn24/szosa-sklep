@@ -29,7 +29,7 @@ function hideInfo(element) {
     element.classList.add('display-none');
 }
 
-nameInput.onchange = async () => {
+nameInput.oninput = async () => {
     const value = await sha256(nameInput.value);
     const user = users.find(e => e.name === value);
 
@@ -42,7 +42,7 @@ nameInput.onchange = async () => {
     }
 };
 
-loginInput.onchange = async () => {
+loginInput.oninput = async () => {
     const value = await sha256(loginInput.value);
     const user = users.find(e => e.login === value);
 

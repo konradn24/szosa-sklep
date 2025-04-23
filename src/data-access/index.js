@@ -3,9 +3,10 @@ const mysql = require('mysql2');
 const makeUsersDb = require("./users-db");
 const makeProductsDb = require("./products-db");
 const makeOrdersDb = require("./orders-db");
+const makeVerificationDb = require("./verification-db");
 
 const { errors, AppError } = require("../utils/errors");
-const logger = require('../utils/logger');
+const logger = require('../services/logger');
 
 const connection = mysql.createPool({
     host: process.env.DB_HOST,
@@ -39,5 +40,6 @@ async function makeQuery({ sql, params=[] }) {
 const usersDb = makeUsersDb({ makeQuery });
 const productsDb = makeProductsDb({ makeQuery });
 const ordersDb = makeOrdersDb({ makeQuery });
+const verificationDb = makeVerificationDb({ makeQuery });
 
-module.exports = { checkConnection, usersDb, productsDb, ordersDb };
+module.exports = { checkConnection, usersDb, productsDb, ordersDb, verificationDb };

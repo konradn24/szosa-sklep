@@ -13,7 +13,14 @@
                 <li><a href="/zarzadzanie-sklepem">Zarządzanie sklepem</a></li>
             <% } %>
             <li><a href="/moje-konto">Moje konto</a></li>
-            <li><a href="#" id="nav-logout">Wyloguj się</a></li>
+            <li><a href="javascript:void(0);" id="nav-logout">Wyloguj się</a></li>
+
+            <form id="nav-logout-form" method="post" action="/auth/logout"></form>
+            <script>
+                document.getElementById('nav-logout').onclick = () => {
+                    document.getElementById('nav-logout-form').submit();
+                }
+            </script>
         <% } else { %>
             <li><a href="/logowanie">Zaloguj się</a></li>
             <li><a href="/rejestracja">Zarejestruj się</a></li>

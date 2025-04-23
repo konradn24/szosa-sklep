@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const securityMiddleware = require('./middlewares/security');
-const logger = require('./utils/logger');
+const logger = require('./services/logger');
 const { checkConnection } = require('./data-access');
 
 const app = express();

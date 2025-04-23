@@ -6,8 +6,8 @@ module.exports = function buildMakeUser() {
         login,
         password = null,
         name,
-        verified,
-        admin
+        verified = false,
+        admin = false
     } = {}, clientProvidedData = false) {
         const error = clientProvidedData ? errors.invalidData : errors.schemaError;
         const isErrorCritical = !clientProvidedData;

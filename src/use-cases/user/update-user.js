@@ -21,8 +21,8 @@ module.exports = function makeUpdateUser({ usersDb }) {
             login: user.login,
             password: user.password,
             name: user.name,
-            verified: user.verified,
-            admin: user.admin
+            verified: user.verified === 1 ? true : false,
+            admin: user.admin === 1 ? true : false
         });
     }
 }

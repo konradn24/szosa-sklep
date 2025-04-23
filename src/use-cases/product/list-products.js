@@ -1,6 +1,6 @@
 const { makeProduct } = require("../../entities");
 const { AppError, errors } = require("../../utils/errors");
-const logger = require("../../utils/logger");
+const logger = require("../../services/logger");
 
 module.exports = function makeListProducts({ productsDb }) {
     return async function listProducts() {

@@ -3,7 +3,7 @@ const { createHash } = require("crypto");
 
 const { listUsers } = require("../use-cases/user")
 const { listProducts } = require("../use-cases/product");
-const logger = require("../utils/logger");
+const logger = require("../services/logger");
 const { errors } = require("../utils/errors");
 
 const router = express.Router();
@@ -43,12 +43,13 @@ router.get("/rejestracja", async (req, res) => {
     try {
         users = await listUsers();
     } catch(error) {
-        console.error(error);
+        logger.error(error);
     }
 
     for(const user of users) {
         delete user.password;
         delete user.admin;
+        delete user.verified;
         user.name = createHash('sha256').update(user.name).digest('hex');
         user.login = createHash('sha256').update(user.login).digest('hex');
     }

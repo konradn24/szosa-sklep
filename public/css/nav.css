@@ -36,3 +36,7 @@
 #nav-logout:hover {
     color: #c00;
 }
+
+#nav-logout-form {
+    display: none;
+}
