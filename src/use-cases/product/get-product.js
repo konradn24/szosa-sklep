@@ -18,7 +18,8 @@ module.exports = function makeGetProduct({ productsDb }) {
             imageUrl: product.image_url,
             category: product.category,
             price: product.price,
-            amount: product.amount
+            amount: product.amount,
+            views: product.views
         });
     }
 }

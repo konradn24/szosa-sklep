@@ -1,15 +1,15 @@
 const { makeProduct } = require("../../entities");
 const { AppError, errors } = require("../../utils/errors");
 
-module.exports = function makeUpdateProduct({ productsDb }) {
-    return async function updateProduct({ product }) {
-        const result = await productsDb.update({ product });
+module.exports = function makeUpdateProductViews({ productsDb }) {
+    return async function updateProductViews({ id }) {
+        const result = await productsDb.updateViews({ id });
 
         if(result.rows.affectedRows === 0) {
-            throw new AppError(errors.notUpdated, "Updating product failed.", ['New product'], [product], true);
+            throw new AppError(errors.notUpdated, "Updating product's views failed.", ['ID'], [id], true);
         }
         
-        const updated = await productsDb.findById({ id: product.id });
+        const updated = await productsDb.findById({ id });
         const updatedProduct = updated.rows[0];
 
         if(!updatedProduct) {

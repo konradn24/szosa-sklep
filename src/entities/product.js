@@ -9,7 +9,8 @@ module.exports = function buildMakeProduct() {
         imageUrl = null,
         category = null,
         price,
-        amount
+        amount,
+        views
     } = {}, clientProvidedData = false) {
         const error = clientProvidedData ? errors.invalidData : errors.schemaError;
         const isErrorCritical = !clientProvidedData;
@@ -46,6 +47,10 @@ module.exports = function buildMakeProduct() {
             throw new AppError(error, "Product must have a valid amount.", ['Amount'], amount, isErrorCritical);
         }
 
-        return { id, name, description, url, imageUrl, category, price, amount };
+        if(isNaN(parseInt(views)) || views < 0) {
+            throw new AppError(error, "Product must have a valid views count.", ['Views'], views, isErrorCritical);
+        }
+
+        return { id, name, description, url, imageUrl, category, price, amount, views };
     }
 }

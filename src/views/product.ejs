@@ -11,7 +11,7 @@
         <div class="container">
             <main>
                 <% if(product.imageUrl) { %>
-                    <img class="image" src="<%= path %>img/<%= product.imageUrl %>" alt="Obrazek poglądowy dla <%= product.name %>">
+                    <img class="image" src="<%= path %>img/uploads/<%= product.imageUrl %>" alt="Obrazek poglądowy dla <%= product.name %>">
                 <% } %>
 
                 <h1 class="header text-center"><%= product.name %></h1>

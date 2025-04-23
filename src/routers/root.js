@@ -2,7 +2,7 @@ const express = require("express");
 const { createHash } = require("crypto");
 
 const { listUsers } = require("../use-cases/user")
-const { listProducts } = require("../use-cases/product");
+const { listProducts, updateProductViews } = require("../use-cases/product");
 const logger = require("../services/logger");
 const { errors } = require("../utils/errors");
 
@@ -76,6 +76,12 @@ router.get("/produkt/:productUrl", async (req, res) => {
     if(!product) {
         logger.error(`Product of URL ${productUrl} not found.`);
         return res.redirect(`/?action=access&error=${errors.notFound}`);
+    }
+
+    try {
+        await updateProductViews({ id: product.id });
+    } catch(error) {
+        logger.error(error);
     }
 
     res.render("product", {

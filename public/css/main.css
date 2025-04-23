@@ -40,6 +40,20 @@ a {
     width: 100%;
 }
 
+.product-tile-div {
+    width: calc(25% - 20px);
+    height: auto;
+    margin: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    background-color: var(--secondary-bg);
+    border-radius: 10px;
+}
+
+.product-tile-div .product-tile {
+    width: calc(100% - 10px);
+}
+
 .product-tile {
     position: relative;
     display: block;
@@ -92,6 +106,17 @@ a {
     margin: 0;
     font-size: 20px;
     color: var(--primary-color);
+}
+
+.product-tile-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.product-tile-controls * {
+    margin: 10px 0;
 }
 
 .header {

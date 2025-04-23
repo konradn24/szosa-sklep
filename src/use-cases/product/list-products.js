@@ -23,7 +23,8 @@ module.exports = function makeListProducts({ productsDb }) {
                     imageUrl: result.rows[i].image_url,
                     category: result.rows[i].category,
                     price: result.rows[i].price,
-                    amount: result.rows[i].amount
+                    amount: result.rows[i].amount,
+                    views: result.rows[i].views
                 }));
             } catch(error) {
                 if(error instanceof AppError && error.appCode === errors.schemaError[0]) {

@@ -5,6 +5,7 @@ module.exports = function makeProductsDb({ makeQuery }) {
         findByUrl,
         insert,
         update,
+        updateViews,
         remove
     });
 
@@ -30,6 +31,10 @@ module.exports = function makeProductsDb({ makeQuery }) {
         return await makeQuery({ sql: "UPDATE products SET name=?,description=?,url=?,image_url=?,category=?,price=?,amount=? WHERE id=?",
             params: [product.name, product.description, product.url, product.imageUrl, product.category, product.price, product.amount, product.id]
         });
+    }
+
+    async function updateViews({ id }) {
+        return await makeQuery({ sql: "UPDATE products SET views=views+1 WHERE id=?", params: [id] });
     }
 
     async function remove({ id }) {

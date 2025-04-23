@@ -9,7 +9,7 @@ const securityMiddleware = require('./middlewares/security');
 const logger = require('./services/logger');
 const { checkConnection } = require('./data-access');
 
-global.appRoot = path.resolve(path.join('../', __dirname));
+global.appRoot = path.resolve(path.join(__dirname, '../'));
 
 const app = express();
 

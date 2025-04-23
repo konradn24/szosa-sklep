@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <%- include('../../includes/header', { title: "Zarządzanie sklepem" }); %>
+        <link rel="stylesheet" href="<%= altPath %>css/list.css">
+    </head>
+
+    <body>
+        <%- include('../../includes/nav', { user }); %>
+
+        <div class="container">
+            <main class="text-center">
+                <h1 class="header">Konta użytkowników</h1>
+
+                <div class="list">
+                    <% for(let i = 0; i < users.length; i++) { %>
+                        <div class="row-space-between">
+                            <div>
+                                <div class="item-title"><i class="icon-user"></i><%= users[i].name %></div>
+                                <div class="item-property"><%= users[i].login %></div>
+                            </div>
+
+                            <ul class="item-actions">
+                                <li>
+                                    <% if(users[i].admin) { %>
+                                        <a href="javascript:{}" style="color: #ff0000;" onclick="showAddAdminForm()"><i class="icon-cancel"></i> Usuń uprawnienia</a>
+                                    <% } else { %>
+                                        <a href="javascript:{}" style="color: #ffbb00;" onclick="showDeleteAdminForm()"><i class="icon-star"></i> Nadaj uprawnienia</a>
+                                    <% } %>
+                                </li>
+                            </ul>
+                        </div>
+                    <% } %>
+                </div>
+            </main>
+        </div>
+    </body> 
+</html>

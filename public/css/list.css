@@ -1,0 +1,36 @@
+.list {
+    background-color: #aaa;
+    width: 40%;
+    margin: 5px auto;
+    text-align: left;
+}
+
+.list > div {
+    border-bottom: 2px solid #999;
+    padding: 6px;
+}
+
+.list .item-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.list .item-property {
+    font-size: 16px;
+    font-weight: 400;
+    padding-left: 6px;
+}
+
+.list .smaller-property-padding {
+    padding-left: 2px;
+}
+
+.list ul {
+    list-style-type: none;
+    margin: auto 10px;
+}
+
+.list ul > li {
+    display: inline-block;
+    margin: 0 2px;
+}
