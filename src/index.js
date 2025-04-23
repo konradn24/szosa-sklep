@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -8,11 +9,14 @@ const securityMiddleware = require('./middlewares/security');
 const logger = require('./services/logger');
 const { checkConnection } = require('./data-access');
 
+global.appRoot = path.resolve(path.join('../', __dirname));
+
 const app = express();
 
 app.set('view engine', "ejs");
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(fileUpload());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 

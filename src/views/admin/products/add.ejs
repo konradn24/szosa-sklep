@@ -13,7 +13,7 @@
             <main class="text-center">
                 <h1 class="header">Dodaj nowy produkt</h1>
 
-                <form method="post">
+                <form method="post" id="form" enctype="multipart/form-data">
                     <div class="form-input">
                         <label for="name">Nazwa:</label>
                         <input type="text" name="name" id="name" required>
@@ -26,12 +26,12 @@
 
                     <div class="form-input">
                         <label for="description">Opis:</label>
-                        <textarea name="description" id="description" required></textarea>
+                        <textarea name="description" id="description"></textarea>
                     </div>
 
                     <div class="form-input" style="margin-top:40px;">
                         <label for="image">Obrazek poglądowy:</label>
-                        <input type="file" name="image" id="image" required>
+                        <input type="file" name="image" id="image">
                     </div>
 
                     <div class="form-input">
@@ -53,9 +53,12 @@
                         <label for="amount">Ilość sztuk w magazynie:</label>
                         <input type="number" name="amount" id="amount" min="0" value="1" required>
                     </div>
-
-                    <button><i class="icon-check-mark"></i> Dodaj</button>
                 </form>
+
+                <button id="submit-button"><i class="icon-ok"></i> Dodaj</button>
+                <a href="/zarzadzanie-sklepem/produkty">
+                    <button><i class="icon-cancel"></i> Anuluj</button>
+                </a>
             </main>
         </div>
 

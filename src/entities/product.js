@@ -38,11 +38,11 @@ module.exports = function buildMakeProduct() {
             throw new AppError(error, "Product's URL must contain 2-64 characters.", ['URL'], [url], isErrorCritical);
         }
 
-        if(isNaN(parseFloat(price))) {
+        if(isNaN(parseFloat(price)) || price <= 0) {
             throw new AppError(error, "Product must have a valid price.", ['Price'], price, isErrorCritical);
         }
 
-        if(isNaN(parseInt(amount))) {
+        if(isNaN(parseInt(amount)) || amount < 0) {
             throw new AppError(error, "Product must have a valid amount.", ['Amount'], amount, isErrorCritical);
         }
 

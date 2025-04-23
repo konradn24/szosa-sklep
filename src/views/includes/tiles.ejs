@@ -4,7 +4,7 @@
     <% for(let i = 0; i < amount; i++) { %>
         <% const product = products[i]; %>
 
-        <a class="product-tile" href="/product/<%= product.url %>">
+        <a class="product-tile" href="/produkt/<%= product.url %>">
             <% if(product.imageUrl) { %>
                 <img src="img/<%= product.imageUrl %>" alt="Obraz poglądowy produktu">
             <% } else { %>
