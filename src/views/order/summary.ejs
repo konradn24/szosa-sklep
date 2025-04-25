@@ -4,6 +4,7 @@
         <%- include('../includes/header', { title: "Podsumowanie zamówienia" }); %>
         <link rel="stylesheet" href="<%= path %>css/form.css">
         <link rel="stylesheet" href="<%= path %>css/list.css">
+        <link rel="stylesheet" href="<%= path %>css/cart.css">
     </head>
 
     <body>
@@ -13,7 +14,8 @@
             <p style="color: red; text-decoration: underline; font-size: 14px;">UWAGA: Ta strona to tylko projekt w celach edukacyjnych! Proszę nie podawać swoich prawdziwych danych.</p>
 
             <main class="text-center">
-                <h1 class="header">Dziękujemy za zakup!</h1>
+                <h1 class="header-no-margin">Dziękujemy za zakup!</h1>
+                <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> Podsumowanie zamówienia</div>
             
                 <% if(!user) { %>
                     <p>Otrzymaliśmy Twoje zamówienie<%= mailSent ? ' i wysłaliśmy E-mail z potwierdzeniem' : '' %>. Wkrótce zweryfikujemy płatność i przejdziemy do realizacji zamówienia. Możesz sprawdzić status swojego zamówienia <a class="text-anchor" href="/zamowienie/<%= order.id %>">pod tym linkiem</a>.</p>
@@ -42,7 +44,25 @@
 
                 <h3 style="text-decoration: underline;">Zapłacono: <%= (Math.round(order.price * 100) / 100).toFixed(2) %> PLN</h3>
             
-                <a href="/"><button>Powrót na stronę główną</button></a>
+                <div class="divide-horizontal"></div>
+
+                <div style="text-align: left; margin: 0 auto; margin-top: 40px; width: 200px;">
+                    <h3>Szczegóły wysyłki:</h3>
+                    <% if(!deliveryData) { %>
+                        <p style="color: red;"><i class="icon-attention"></i> Niestety wystąpił problem z zapisaniem danych do wysyłki. Jak najszybciej skontaktujemy się z Tobą poprzez adres E-mail, przepraszamy za utrudnienia.</p>
+                    <% } else { %>
+                        <span>Numer telefonu: <b><%= deliveryData.phone %></b></span><br>
+                        <span>Imię: <b><%= deliveryData.firstName %></b></span><br>
+                        <span>Nazwisko: <b><%= deliveryData.lastName %></b></span><br>
+                        <span>Ulica: <b><%= deliveryData.street %></b></span><br>
+                        <span>Numer domu: <b><%= deliveryData.house %></b></span><br>
+                        <span>Numer lokalu: <b><%= deliveryData.apartment %></b></span><br>
+                        <span>Kod pocztowy: <b><%= deliveryData.postal %></b></span><br>
+                        <span>Miasto: <b><%= deliveryData.city %></b></span>
+                    <% } %>
+                </div>
+
+                <a href="/" style="display: block; margin: 20px 0;"><button>Powrót na stronę główną</button></a>
             </main>
         </div>
 

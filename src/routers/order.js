@@ -2,7 +2,8 @@ const express = require('express');
 
 const { listProducts } = require('../use-cases/product');
 const { addOrder } = require('../use-cases/order');
-const { makeOrder } = require('../entities');
+const { addDeliveryData } = require('../use-cases/delivery-data');
+const { makeOrder, makeDeliveryData } = require('../entities');
 
 const logger = require('../services/logger');
 const { sendMail } = require('../services/mailer');
@@ -34,8 +35,10 @@ router.get('/', async (req, res) => {
             continue;
         }
 
-        orderPrice = product.price * cartItem.amount;
+        orderPrice += product.price * cartItem.amount;
     }
+
+    req.session.orderPrice = orderPrice;
 
     res.render('order/index', {
         path: '../',
@@ -78,7 +81,12 @@ router.post('/podsumowanie', async (req, res) => {
             continue;
         }
 
-        orderPrice = product.price * cartItem.amount;
+        orderPrice += product.price * cartItem.amount;
+    }
+
+    if(orderPrice !== req.session.orderPrice) {
+        logger.error(`Cart order price does not equals session order price!`);
+        return res.redirect(`/koszyk?action=payment&error=${errors.badRequest[0]}`);
     }
 
     let order;
@@ -99,7 +107,30 @@ router.post('/podsumowanie', async (req, res) => {
         return res.redirect(`/koszyk?action=payment&error=${error.appCode}`);
     }
 
+    const { phone, firstName, lastName, street, house, apartment, postal, city } = req.body;
+
+    let deliveryData;
+
+    try {
+        deliveryData = makeDeliveryData({
+            orderId: order.id,
+            phone: phone,
+            firstName: firstName,
+            lastName: lastName,
+            street: street,
+            house: house,
+            apartment: apartment,
+            postal: postal,
+            city: city
+        }, true);
+        deliveryData = await addDeliveryData({ deliveryData });
+    } catch(error) {
+        logger.error(error);
+        deliveryData = false;
+    }
+
     req.session.cart = [];
+    delete req.session.orderPrice;
 
     const mailOptions = {
         from: process.env.MAIL_USER,
@@ -117,6 +148,7 @@ router.post('/podsumowanie', async (req, res) => {
         orderCart: cart,
         products: products,
         order: order,
+        deliveryData: deliveryData,
         mailSent: mailSent
     });
 });

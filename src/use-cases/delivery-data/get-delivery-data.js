@@ -1,0 +1,25 @@
+const { makeDeliveryData } = require("../../entities");
+const { AppError, errors } = require("../../utils/errors");
+
+module.exports = function makeGetDeliveryData({ deliveryDataDb }) {
+    return async function getDeliveryData({ orderId }) {
+        const result = await deliveryDataDb.findByOrderId({ id: orderId });
+        const deliveryData = result.rows[0];
+
+        if(!deliveryData) {
+            throw new AppError(errors.notFound, "Delivery data not found.", ['ID'], [id]);
+        }
+
+        return makeDeliveryData({
+            orderId: deliveryData.orderId,
+            phone: deliveryData.phone,
+            firstName: deliveryData.firstName,
+            lastName: deliveryData.lastName,
+            street: deliveryData.street,
+            house: deliveryData.house,
+            apartment: deliveryData.apartment,
+            postal: deliveryData.postal,
+            city: deliveryData.city
+        });
+    }
+}

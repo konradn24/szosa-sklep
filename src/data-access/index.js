@@ -4,6 +4,7 @@ const makeUsersDb = require("./users-db");
 const makeProductsDb = require("./products-db");
 const makeOrdersDb = require("./orders-db");
 const makeVerificationDb = require("./verification-db");
+const makeDeliveryDataDb = require("./delivery-data-db");
 
 const { errors, AppError } = require("../utils/errors");
 const logger = require('../services/logger');
@@ -41,5 +42,6 @@ const usersDb = makeUsersDb({ makeQuery });
 const productsDb = makeProductsDb({ makeQuery });
 const ordersDb = makeOrdersDb({ makeQuery });
 const verificationDb = makeVerificationDb({ makeQuery });
+const deliveryDataDb = makeDeliveryDataDb({ makeQuery });
 
-module.exports = { checkConnection, usersDb, productsDb, ordersDb, verificationDb };
+module.exports = { checkConnection, usersDb, productsDb, ordersDb, verificationDb, deliveryDataDb };

@@ -12,24 +12,25 @@
             <p style="color: red; text-decoration: underline; font-size: 14px;">UWAGA: Ta strona to tylko projekt w celach edukacyjnych! Proszę nie podawać swoich prawdziwych danych.</p>
 
             <main class="text-center">
-                <h1 class="header">Złóż zamówienie</h1>
-            
+                <h1 class="header-no-margin">Złóż zamówienie</h1>
+                <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> Zamówienie</div>
+
                 <% if(!user) { %>
                     <p><a class="text-anchor" href="/logowanie">Zaloguj się</a> lub <a class="text-anchor" href="/rejestracja">zarejestruj</a>, aby szybko składać zamówienia oraz uzyskać dostęp do historii zamówień!</p>
                 <% } %>
 
                 <form class="order-form" method="post" action="/zamowienie/podsumowanie">
                     <input class="small-input" type="email" name="login" placeholder="Adres E-mail" <%- user ? `value="${user.login}"` : '' %> required>
-                    <input class="small-input" type="text" name="phone_number" placeholder="Numer telefonu" required>
+                    <input class="small-input" type="text" name="phone" placeholder="Numer telefonu" required>
 
-                    <input class="small-input" type="text" name="first_name" placeholder="Imię" required>
-                    <input class="small-input" type="text" name="last_name" placeholder="Nazwisko" required>
+                    <input class="small-input" type="text" name="firstName" placeholder="Imię" required>
+                    <input class="small-input" type="text" name="lastName" placeholder="Nazwisko" required>
 
                     <input class="small-input" type="text" name="street" placeholder="Ulica" required>
-                    <input class="x-small-input" type="text" name="house_number" placeholder="Numer domu" required>
-                    <input class="x-small-input" type="text" name="apartment_number" placeholder="Numer lokalu">
+                    <input class="x-small-input" type="text" name="house" placeholder="Numer domu" required>
+                    <input class="x-small-input" type="text" name="apartment" placeholder="Numer lokalu">
 
-                    <input class="small-input" type="text" name="postal_code" placeholder="Kod pocztowy" required>
+                    <input class="small-input" type="text" name="postal" placeholder="Kod pocztowy" required>
                     <input class="small-input" type="text" name="city" placeholder="Miasto" required>
 
                     <input style="margin-top: 40px;" id="card" class="big-input" type="text" name="card" placeholder="Numer karty" required>
