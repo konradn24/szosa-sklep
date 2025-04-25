@@ -7,11 +7,12 @@
     </head>
 
     <body>
-        <%- include('../../includes/nav', { user }); %>
+        <%- include('../../includes/nav', { user, cart }); %>
 
         <div class="container">
             <main class="text-center">
-                <h1 class="header">Edytuj produkt</h1>
+                <h1 class="header-no-margin">Edytuj produkt</h1>
+                <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> <a href="/zarzadzanie-sklepem">Zarządzanie sklepem</a> <i class="icon-right-dir"></i> <a href="/zarzadzanie-sklepem/produkty">Produkty</a> <i class="icon-right-dir"></i> Edytuj</div>
 
                 <form method="post" id="form" enctype="multipart/form-data">
                     <div class="form-input">
@@ -23,6 +24,8 @@
                         <label for="url">Adres URI:</label>
                         <input type="text" name="url" id="url" value="<%= product.url %>" required>
                     </div>
+
+                    <div id="url-info" class="text-red display-none"></div>
 
                     <div class="form-input">
                         <label for="description">Opis:</label>
@@ -62,6 +65,10 @@
             </main>
         </div>
 
-        <script src="<%= path %>js/add-product-form.js"></script>
+        <script>
+            const productsUrl = JSON.parse('<%- JSON.stringify(productsUrl) %>');
+        </script>
+
+        <script src="<%= path %>js/product-form.js"></script>
     </body> 
 </html>

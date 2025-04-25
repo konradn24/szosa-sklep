@@ -2,11 +2,7 @@ const nodemailer = require('nodemailer');
 const logger = require('./logger');
 
 async function sendMail(mailOptions) {
-    console.log('sendmail')
-
     return new Promise((resolve, reject) => {
-        console.log('promise start')
-
         const transporter = nodemailer.createTransport({
             service: process.env.MAIL_SERVICE,
             auth: {
@@ -14,8 +10,6 @@ async function sendMail(mailOptions) {
                 pass: process.env.MAIL_PASS
             }
         });
-
-        console.log('transporter created')
 
         transporter.sendMail(mailOptions, function(error, info) {
             console.log(error)

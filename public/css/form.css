@@ -23,3 +23,29 @@ input[type="email"], input[type="password"], input[type="text"] {
     padding: 6px;
     font-size: 14px;
 }
+
+.order-form {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.order-form input {
+    margin: 5px 0;
+}
+
+.order-form .x-small-input {
+    width: calc(25% - 20px);
+}
+
+.order-form .small-input {
+    width: calc(50% - 20px);
+}
+
+.order-form .big-input {
+    width: calc(100% - 20px);
+}
+
+.order-form .inputs-row {
+    display: flex;
+    flex-direction: row;
+}

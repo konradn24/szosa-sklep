@@ -17,15 +17,15 @@ module.exports = function makeUpdateProductViews({ productsDb }) {
         }
 
         return makeProduct({
-            id: product.id,
-            name: product.name,
-            description: product.description,
-            url: product.url,
-            imageUrl: product.image_url,
-            category: product.category,
-            price: product.price,
-            amount: product.amount,
-            views: product.views
+            id: updatedProduct.id,
+            name: updatedProduct.name,
+            description: updatedProduct.description,
+            url: updatedProduct.url,
+            imageUrl: updatedProduct.image_url,
+            category: updatedProduct.category,
+            price: updatedProduct.price,
+            amount: updatedProduct.amount,
+            views: updatedProduct.views
         });
     }
 }

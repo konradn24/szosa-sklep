@@ -3,9 +3,10 @@ const express = require('express');
 const { getProduct, listProducts, addProduct, updateProduct, removeProduct } = require('../../use-cases/product');
 const { listOrders } = require('../../use-cases/order');
 
+const { makeProduct } = require('../../entities');
+
 const { errors } = require('../../utils/errors');
 const logger = require('../../services/logger');
-const { makeProduct } = require('../../entities');
 
 const router = express.Router();
 
@@ -37,15 +38,32 @@ router.get('/', async (req, res) => {
     res.render('admin/products/index', {
         path: '../../',
         user: req.session.user,
+        cart: req.session.cart,
         products: products,
         orders: orders
     });
 });
 
-router.get('/dodaj', (req, res) => {
+router.get('/dodaj', async (req, res) => {
+    let products = [];
+
+    try {
+        products = await listProducts();
+    } catch(error) {
+        logger.error(error);
+
+        if(error.appCode !== errors.notFound[0]) {
+            return res.redirect(`/zarzadzanie-sklepem/produkty?action=access&error=${error.appCode}`);
+        }
+    }
+
+    let productsUrl = products.map(product => product.url);
+
     res.render('admin/products/add', {
         path: '../../../',
-        user: req.session.user
+        user: req.session.user,
+        cart: req.session.cart,
+        productsUrl: productsUrl
     });
 });
 
@@ -105,19 +123,30 @@ router.get('/edytuj', async (req, res) => {
         return res.redirect(`/zarzadzanie-sklepem/produkty?action=access&error=${errors.notFound}`);
     }
 
-    let product;
+    let products = [];
 
     try {
-        product = await getProduct({ id });
+        products = await listProducts();
     } catch(error) {
         logger.error(error);
         return res.redirect(`/zarzadzanie-sklepem/produkty?action=access&error=${error.appCode}`);
     }
 
+    const product = products.find(e => e.id === parseInt(id));
+
+    if(!product) {
+        logger.error(`Product of ID ${id} not found.`);
+        return res.redirect(`/zarzadzanie-sklepem/produkty?action=access&error=${errors.notFound[0]}`);
+    }
+
+    let productsUrl = products.map(e => e.url !== product.url ? e.url : null);
+
     res.render('admin/products/edit', {
         path: '../../',
         user: req.session.user,
-        product: product
+        cart: req.session.cart,
+        product: product,
+        productsUrl: productsUrl
     });
 });
 

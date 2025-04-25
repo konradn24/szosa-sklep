@@ -3,7 +3,7 @@
 <% if(products && products.length > 0) { %>
     <% for(let i = 0; i < amount; i++) { %>
         <% const product = products[i]; %>
-        <% const ordersCount = orders.filter(order => order.productId === product.id).length; %>
+        <% const ordersCount = orders.filter(order => order.productsIds.includes(product.id)).length; %>
 
         <div class="product-tile-div">
             <a class="product-tile" href="/produkt/<%= product.url %>">

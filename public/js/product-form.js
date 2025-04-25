@@ -6,6 +6,8 @@ const amountInput = document.getElementById('amount');
 const form = document.getElementById('form');
 const submitButton = document.getElementById('submit-button');
 
+const uriInfo = document.getElementById('url-info');
+
 let uriChangedByUser = false;
 
 nameInput.oninput = () => {
@@ -17,10 +19,24 @@ nameInput.oninput = () => {
 
     const uri = nameInput.value.trim().replaceAll(' ', '-').toLowerCase();
     uriInput.value = uri;
+
+    if(productsUrl.includes(uriInput.value)) {
+        denyInput(uriInput);
+        showInfo(uriInfo, '<i class="icon-attention"></i> Ten adres URL jest już zajęty!');
+    } else {
+        allowInput(uriInput);
+        hideInfo(uriInfo);
+    }
 }
 
 uriInput.oninput = () => {
-    allowInput(uriInput);
+    if(productsUrl.includes(uriInput.value)) {
+        denyInput(uriInput);
+        showInfo(uriInfo, '<i class="icon-attention"></i> Ten adres URL jest już zajęty!');
+    } else {
+        allowInput(uriInput);
+        hideInfo(uriInfo);
+    }
 
     if(uriInput.value === '') {
         uriChangedByUser = false;
@@ -73,6 +89,13 @@ function validateForm() {
         filled = false;
     }
 
+    if(productsUrl.includes(uriInput.value)) {
+        denyInput(uriInput);
+        showInfo(uriInfo, '<i class="icon-attention"></i> Ten adres URL jest już zajęty!');
+
+        filled = false;
+    }
+
     if(!filled) {
         return false;
     }
@@ -86,4 +109,13 @@ function allowInput(inputElement) {
 
 function denyInput(inputElement) {
     inputElement.style.border = '1px solid red';
+}
+
+function showInfo(element, html) {
+    element.classList.remove('display-none');
+    element.innerHTML = html;
+}
+
+function hideInfo(element) {
+    element.classList.add('display-none');
 }

@@ -20,6 +20,21 @@ body {
 
 a {
     text-decoration: none;
+    color: inherit;
+}
+
+.text-anchor {
+    color: var(--dark-secondary-color);
+    text-decoration: underline;
+    transition: color ease-in-out 0.3s;
+}
+
+.text-anchor:hover {
+    color: var(--dark-2-secondary-color);
+}
+
+.d-block {
+    display: block;
 }
 
 .container {
@@ -123,6 +138,15 @@ a {
     letter-spacing: 3px;
 }
 
+.header-no-margin {
+    letter-spacing: 3px;
+    margin-bottom: 0;
+}
+
+.path {
+    margin-bottom: 25px;
+}
+
 .text-center {
     text-align: center;
 }
@@ -165,4 +189,21 @@ input[type="number"] {
     padding: 10px;
     color: #ccc;
     font-size: 14px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.row-space-between {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.amount-select {
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 18px;
 }

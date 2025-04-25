@@ -19,6 +19,7 @@ router.get("/", async (req, res) => {
 
     res.render("index", {
         user: req.session.user,
+        cart: req.session.cart,
         products: products
     });
 });
@@ -29,7 +30,8 @@ router.get("/logowanie", (req, res) => {
     }
 
     res.render("auth/login", {
-        path: '../'
+        path: '../',
+        cart: req.session.cart
     });
 });
 
@@ -56,7 +58,8 @@ router.get("/rejestracja", async (req, res) => {
 
     res.render("auth/register", {
         path: '../',
-        users: users
+        users: users,
+        cart: req.session.cart
     });
 });
 
@@ -78,15 +81,18 @@ router.get("/produkt/:productUrl", async (req, res) => {
         return res.redirect(`/?action=access&error=${errors.notFound}`);
     }
 
-    try {
-        await updateProductViews({ id: product.id });
-    } catch(error) {
-        logger.error(error);
+    if(req.query.action !== 'cart-add') {
+        try {
+            await updateProductViews({ id: product.id });
+        } catch(error) {
+            logger.error(error);
+        }
     }
 
     res.render("product", {
         path: '../',
         user: req.session.user,
+        cart: req.session.cart,
         products: products,
         product: product
     });

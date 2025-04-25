@@ -6,11 +6,12 @@
     </head>
 
     <body>
-        <%- include('../../includes/nav', { user }); %>
+        <%- include('../../includes/nav', { user, cart }); %>
 
         <div class="container">
             <main class="text-center">
-                <h1 class="header">Konta użytkowników</h1>
+                <h1 class="header-no-margin">Konta użytkowników</h1>
+                <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> <a href="/zarzadzanie-sklepem">Zarządzanie sklepem</a> <i class="icon-right-dir"></i> Użytkownicy</div>
 
                 <div class="list">
                     <% for(let i = 0; i < users.length; i++) { %>

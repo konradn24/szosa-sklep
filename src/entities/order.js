@@ -3,8 +3,8 @@ const { AppError, errors } = require("../utils/errors");
 module.exports = function buildMakeOrder() {
     return function makeOrder({
         id,
-        userId,
-        productId,
+        userId = null,
+        productsIds,
         date,
         price,
         card,
@@ -21,20 +21,16 @@ module.exports = function buildMakeOrder() {
             throw new AppError(error, "Order's ID must be a positive number.", ['ID'], [id], isErrorCritical);
         }
 
-        if(!userId) {
-            throw new AppError(error, "Order must have an ID.", null, null, isErrorCritical);
-        }
-
-        if(userId < 1) {
+        if(userId && userId < 1) {
             throw new AppError(error, "Order's user ID must be a positive number.", ['User ID'], [userId], isErrorCritical);
         }
 
-        if(!productId) {
-            throw new AppError(error, "Order must have an ID.", null, null, isErrorCritical);
+        if(!productsIds) {
+            throw new AppError(error, "Order must have a products IDs.", null, null, isErrorCritical);
         }
 
-        if(productId < 1) {
-            throw new AppError(error, "Order's user ID must be a positive number.", ['Product ID'], [productId], isErrorCritical);
+        if(!Array.isArray(productsIds) || productsIds.length <= 0) {
+            throw new AppError(error, "Order's products IDs must be a valid array.", ['Product ID'], [productsIds], isErrorCritical);
         }
 
         if(!date) {
@@ -57,6 +53,6 @@ module.exports = function buildMakeOrder() {
             throw new AppError(error, "Order's paymentMade property must be a boolean.", ['Payment made'], paymentMade, isErrorCritical);
         }
 
-        return { id, userId, productId, date, price, card, paymentMade };
+        return { id, userId, productsIds, date, price, card, paymentMade };
     }
 }

@@ -27,9 +27,11 @@ app.use(session({
     rolling: true
 }));
 
-const { root, auth, admin } = require("./routers");
+const { root, auth, admin, cart, order } = require("./routers");
 
 app.use("/", root);
+app.use("/koszyk", cart);
+app.use("/zamowienie", order);
 app.use("/auth", auth);
 app.use("/zarzadzanie-sklepem", securityMiddleware.checkAdminAccess, admin);
 // app.use("/auth", authRouter);

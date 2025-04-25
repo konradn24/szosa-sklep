@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <%- include('../includes/header', { title: "Zamówienie" }); %>
+        <link rel="stylesheet" href="<%= path %>css/form.css">
+    </head>
+
+    <body>
+        <%- include('../includes/nav', { user, cart }); %>
+
+        <div class="container">
+            <p style="color: red; text-decoration: underline; font-size: 14px;">UWAGA: Ta strona to tylko projekt w celach edukacyjnych! Proszę nie podawać swoich prawdziwych danych.</p>
+
+            <main class="text-center">
+                <h1 class="header">Złóż zamówienie</h1>
+            
+                <% if(!user) { %>
+                    <p><a class="text-anchor" href="/logowanie">Zaloguj się</a> lub <a class="text-anchor" href="/rejestracja">zarejestruj</a>, aby szybko składać zamówienia oraz uzyskać dostęp do historii zamówień!</p>
+                <% } %>
+
+                <form class="order-form" method="post" action="/zamowienie/podsumowanie">
+                    <input class="small-input" type="email" name="login" placeholder="Adres E-mail" <%- user ? `value="${user.login}"` : '' %> required>
+                    <input class="small-input" type="text" name="phone_number" placeholder="Numer telefonu" required>
+
+                    <input class="small-input" type="text" name="first_name" placeholder="Imię" required>
+                    <input class="small-input" type="text" name="last_name" placeholder="Nazwisko" required>
+
+                    <input class="small-input" type="text" name="street" placeholder="Ulica" required>
+                    <input class="x-small-input" type="text" name="house_number" placeholder="Numer domu" required>
+                    <input class="x-small-input" type="text" name="apartment_number" placeholder="Numer lokalu">
+
+                    <input class="small-input" type="text" name="postal_code" placeholder="Kod pocztowy" required>
+                    <input class="small-input" type="text" name="city" placeholder="Miasto" required>
+
+                    <input style="margin-top: 40px;" id="card" class="big-input" type="text" name="card" placeholder="Numer karty" required>
+                    <div id="card-info" class="text-red display-none"><i class="icon-attention"></i> Proszę podać właściwy numer karty (xxxx xxxx xxxx xxxx)!</div>
+
+                    <h3 style="text-decoration: underline;">Do zapłaty: <%= (Math.round(orderPrice * 100) / 100).toFixed(2) %> PLN</h3>
+
+                    <button id="submit">Kupuję i płacę</button>
+                </form>
+            </main>
+        </div>
+
+        <script src="<%= path %>js/order-form.js"></script>
+    </body> 
+</html>

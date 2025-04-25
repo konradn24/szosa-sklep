@@ -8,6 +8,8 @@
     </ul>
 
     <ul class="auth-nav">
+        <li><a href="/koszyk"><i class="icon-basket"></i> Koszyk (<%= cart ? cart.reduce((n, {amount}) => n + amount, 0) : 0 %>)</a></li>
+
         <% if(user) { %>
             <% if(user.admin) { %>
                 <li><a href="/zarzadzanie-sklepem">Zarządzanie sklepem</a></li>

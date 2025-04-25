@@ -7,7 +7,8 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     res.render('admin/index', {
         path: '../',
-        user: req.session.user
+        user: req.session.user,
+        cart: req.session.cart
     });
 });
 

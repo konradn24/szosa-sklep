@@ -6,15 +6,18 @@
     </head>
 
     <body>
-        <%- include('includes/nav', { user }); %>
+        <%- include('includes/nav', { user, cart }); %>
 
         <div class="container">
             <main>
+                <div class="text-center">
+                    <h1 class="header-no-margin"><%= product.name %></h1>
+                    <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> Przeglądaj produkt</div>
+                </div>
+
                 <% if(product.imageUrl) { %>
                     <img class="image" src="<%= path %>img/uploads/<%= product.imageUrl %>" alt="Obrazek poglądowy dla <%= product.name %>">
                 <% } %>
-
-                <h1 class="header text-center"><%= product.name %></h1>
 
                 <div class="product-panel">
                     <section>
@@ -23,11 +26,19 @@
 
                             <div class="content-divide-vertical"></div>
 
-                            <form method="POST">
+                            <form method="post" action="/koszyk/dodaj">
+                                <input type="hidden" name="id" value="<%= product.id %>">
+                                <input type="hidden" name="url" value="<%= product.url %>">
+
                                 <button>Dodaj do koszyka</button>
     
                                 <label>Ilość szt.:
-                                    <input type="number" min="1" max="<%= product.amount %>" value="1">
+                                    <select class="amount-select" name="amount">
+                                        <option value="1" selected>1</option>
+                                        <% for(let i = 2; i <= product.amount; i++) { %>
+                                            <option value="<%= i %>"><%= i %></option>
+                                        <% } %>
+                                    </select>
                                 </label>
                             </form>
                         </div>

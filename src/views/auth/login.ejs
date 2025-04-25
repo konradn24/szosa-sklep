@@ -7,11 +7,12 @@
     </head>
 
     <body>
-        <%- include('../includes/nav', { user: null }); %>
+        <%- include('../includes/nav', { user: null, cart }); %>
 
         <div class="container">
             <main class="text-center">
-                <h1 class="header">Zaloguj się</h1>
+                <h1 class="header-no-margin">Zaloguj się</h1>
+                <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> Logowanie</div>
 
                 <form method="post" action="/auth">
                     <div class="form-input">

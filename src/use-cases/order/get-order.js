@@ -14,11 +14,11 @@ module.exports = function makeGetOrder({ ordersDb }) {
         return makeOrder({
             id: order.id,
             userId: order.user_id,
-            productId: order.product_id,
+            productsIds: order.products_ids.split(',').map(Number),
             date: parseDate(order.date),
             price: order.price,
             card: order.card,
-            paymentMade: order.payment_made
+            paymentMade: order.payment_made === 0 ? false : true
         });
     }
 }

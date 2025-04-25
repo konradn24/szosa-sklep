@@ -3,6 +3,7 @@ const { AppError, errors } = require("../../utils/errors");
 
 module.exports = function makeUpdateOrder({ ordersDb }) {
     return async function updateOrder({ order }) {
+        order.productsIds = order.productsIds.join(',');
         const result = await ordersDb.update({ order });
 
         if(result.rows.affectedRows === 0) {
@@ -17,13 +18,13 @@ module.exports = function makeUpdateOrder({ ordersDb }) {
         }
 
         return makeOrder({
-            id: order.id,
-            userId: order.user_id,
-            productId: order.product_id,
-            date: parseDate(order.date),
-            price: order.price,
-            card: order.card,
-            paymentMade: order.payment_made
+            id: updatedOrder.id,
+            userId: updatedOrder.user_id,
+            productId: updatedOrder.products_ids.split(',').map(Number),
+            date: parseDate(updatedOrder.date),
+            price: updatedOrder.price,
+            card: updatedOrder.card,
+            paymentMade: updatedOrder.payment_made === 0 ? false : true
         });
     }
 }

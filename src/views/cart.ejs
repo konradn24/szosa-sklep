@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <%- include('includes/header', { title: "Koszyk" }); %>
+        <link rel="stylesheet" href="css/list.css">
+        <link rel="stylesheet" href="css/cart.css">
+    </head>
+
+    <body>
+        <%- include('includes/nav', { user, cart }); %>
+
+        <div class="container">
+            <main class="text-center">
+                <h1 class="header-no-margin">Koszyk</h1>
+                <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> Koszyk</div>
+
+                <% if(!Array.isArray(cart) || cart.length <= 0 || cart.every(e => e.amount <= 0)) { %>
+                    <h3>Twój koszyk jest pusty!</h3>
+                <% } else { %>
+                    <div class="list cart-list">
+                        <% for(let i = 0; i < cart.length; i++) { %>
+                            <% const product = products.find(e => e.id === cart[i].id); %>
+                            <% if(!product || cart[i].amount <= 0) continue; %>
+    
+                            <div class="row-space-between">
+                                <div>
+                                    <a class="d-block row" href="/produkt/<%= product.url %>">
+                                        <img src="/img/<%= product.imageUrl ? `uploads/${product.imageUrl}` : 'default.jpg' %>" alt="Obrazek poglądowy produktu">
+                                        <div class="product-info">
+                                            <div class="item-title"><%= product.name %> <i>(<%= cart[i].amount %>)</i></div>
+                                            <div class="item-property"><b><%= product.price %> PLN</b></div>
+                                        </div>
+                                    </a>
+                                </div>
+    
+                                <ul class="item-actions">
+                                    <li>
+                                        <form id="amount-modify-form-<%= product.id %>" method="post" action="/koszyk/modyfikuj">
+                                            <input type="hidden" name="id" value="<%= product.id %>">
+                                            <select class="amount-select" name="amount" onchange="onModify(<%= product.id %>)">
+                                                <% for(let j = 1; j <= product.amount; j++) { %>
+                                                    <option value="<%= j %>" <%- cart[i].amount === j ? 'selected' : '' %>><%= j %></option>
+                                                <% } %>
+                                            </select>
+                                        </form>
+                                    </li>
+    
+                                    <li>
+                                        <form id="remove-form-<%= product.id %>" method="post" action="/koszyk/usun">
+                                            <input type="hidden" name="id" value="<%= product.id %>">
+                                            <a href="javascript:{}" style="color: #ff0000;" onclick="onRemove(<%= product.id %>)"><i class="icon-trash"></i> Usuń</a>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <h3 style="text-decoration: underline;">Do zapłaty: <%= (Math.round(orderPrice * 100) / 100).toFixed(2) %> PLN</h3>
+
+                    <a href="/zamowienie"><button>Przejdź do zamówienia</button></a>
+                <% } %>
+            </main>
+        </div>
+
+        <script>
+            function onModify(id) {
+                document.getElementById(`amount-modify-form-${id}`).submit();
+            }
+
+            function onRemove(id) {
+                document.getElementById(`remove-form-${id}`).submit();
+            }
+        </script>
+    </body> 
+</html>

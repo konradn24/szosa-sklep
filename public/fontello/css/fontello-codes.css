@@ -39,6 +39,8 @@
 .icon-wrench:before { content: '\e825'; } /* '' */
 .icon-chart-bar:before { content: '\e826'; } /* '' */
 .icon-info-circled:before { content: '\e827'; } /* '' */
+.icon-basket:before { content: '\e828'; } /* '' */
+.icon-credit-card:before { content: '\e829'; } /* '' */
 .icon-menu:before { content: '\f0c9'; } /* '' */
 .icon-mail-alt:before { content: '\f0e0'; } /* '' */
 .icon-building:before { content: '\f0f7'; } /* '' */
@@ -51,6 +53,8 @@
 .icon-building-filled:before { content: '\f1ad'; } /* '' */
 .icon-cab:before { content: '\f1b9'; } /* '' */
 .icon-wifi:before { content: '\f1eb'; } /* '' */
+.icon-cc-visa:before { content: '\f1f0'; } /* '' */
+.icon-cc-mastercard:before { content: '\f1f1'; } /* '' */
 .icon-trash:before { content: '\f1f8'; } /* '' */
 .icon-user-plus:before { content: '\f234'; } /* '' */
 .icon-user-times:before { content: '\f235'; } /* '' */

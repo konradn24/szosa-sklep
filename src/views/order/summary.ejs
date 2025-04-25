@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <%- include('../includes/header', { title: "Podsumowanie zamówienia" }); %>
+        <link rel="stylesheet" href="<%= path %>css/form.css">
+        <link rel="stylesheet" href="<%= path %>css/list.css">
+    </head>
+
+    <body>
+        <%- include('../includes/nav', { user, cart }); %>
+
+        <div class="container">
+            <p style="color: red; text-decoration: underline; font-size: 14px;">UWAGA: Ta strona to tylko projekt w celach edukacyjnych! Proszę nie podawać swoich prawdziwych danych.</p>
+
+            <main class="text-center">
+                <h1 class="header">Dziękujemy za zakup!</h1>
+            
+                <% if(!user) { %>
+                    <p>Otrzymaliśmy Twoje zamówienie<%= mailSent ? ' i wysłaliśmy E-mail z potwierdzeniem' : '' %>. Wkrótce zweryfikujemy płatność i przejdziemy do realizacji zamówienia. Możesz sprawdzić status swojego zamówienia <a class="text-anchor" href="/zamowienie/<%= order.id %>">pod tym linkiem</a>.</p>
+                <% } else { %>
+                    <p>Otrzymaliśmy Twoje zamówienie<%= mailSent ? ' i wysłaliśmy E-mail z potwierdzeniem' : '' %>. Wkrótce zweryfikujemy płatność i przejdziemy do realizacji zamówienia. Możesz sprawdzić status swojego zamówienia w <a class="text-anchor" href="/moje-konto/historia">historii zamówień</a> oraz <a class="text-anchor" href="/zamowienie/<%= order.id %>">pod tym linkiem</a>.</p>
+                <% } %>
+
+                <div class="list cart-list">
+                    <% for(let i = 0; i < orderCart.length; i++) { %>
+                        <% const product = products.find(e => e.id === orderCart[i].id); %>
+                        <% if(!product || orderCart[i].amount <= 0) continue; %>
+
+                        <div class="row-space-between">
+                            <div>
+                                <a class="text-anchor d-block row" href="/produkt/<%= product.url %>">
+                                    <img src="/img/<%= product.imageUrl ? `uploads/${product.imageUrl}` : 'default.jpg' %>" alt="Obrazek poglądowy produktu">
+                                    <div class="product-info">
+                                        <div class="item-title"><%= product.name %> <i>(<%= orderCart[i].amount %>)</i></div>
+                                        <div class="item-property"><b><%= product.price %> PLN</b></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+
+                <h3 style="text-decoration: underline;">Zapłacono: <%= (Math.round(order.price * 100) / 100).toFixed(2) %> PLN</h3>
+            
+                <a href="/"><button>Powrót na stronę główną</button></a>
+            </main>
+        </div>
+
+        <% if(!mailSent) { %>
+            <script>
+                // Show error popup
+            </script>
+        <% } %>
+    </body> 
+</html>
