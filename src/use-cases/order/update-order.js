@@ -24,7 +24,8 @@ module.exports = function makeUpdateOrder({ ordersDb }) {
             date: parseDate(updatedOrder.date),
             price: updatedOrder.price,
             card: updatedOrder.card,
-            paymentMade: updatedOrder.payment_made === 0 ? false : true
+            paymentMade: updatedOrder.payment_made === 0 ? false : true,
+            completed: updatedOrder.completed === 0 ? false : true
         });
     }
 }

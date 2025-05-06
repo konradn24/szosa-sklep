@@ -18,9 +18,9 @@
                 <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> Podsumowanie zamówienia</div>
             
                 <% if(!user) { %>
-                    <p>Otrzymaliśmy Twoje zamówienie<%= mailSent ? ' i wysłaliśmy E-mail z potwierdzeniem' : '' %>. Wkrótce zweryfikujemy płatność i przejdziemy do realizacji zamówienia. Możesz sprawdzić status swojego zamówienia <a class="text-anchor" href="/zamowienie/<%= order.id %>">pod tym linkiem</a>.</p>
+                    <p>Otrzymaliśmy Twoje zamówienie<%= mailSent ? ' i wysłaliśmy E-mail z potwierdzeniem' : '' %>. Wkrótce zweryfikujemy płatność i przejdziemy do realizacji zamówienia. Możesz sprawdzić status swojego zamówienia <a class="text-anchor" href="/zamowienie/<%= order.id %>?login=<%= orderLogin %>">pod tym linkiem</a>.</p>
                 <% } else { %>
-                    <p>Otrzymaliśmy Twoje zamówienie<%= mailSent ? ' i wysłaliśmy E-mail z potwierdzeniem' : '' %>. Wkrótce zweryfikujemy płatność i przejdziemy do realizacji zamówienia. Możesz sprawdzić status swojego zamówienia w <a class="text-anchor" href="/moje-konto/historia">historii zamówień</a> oraz <a class="text-anchor" href="/zamowienie/<%= order.id %>">pod tym linkiem</a>.</p>
+                    <p>Otrzymaliśmy Twoje zamówienie<%= mailSent ? ' i wysłaliśmy E-mail z potwierdzeniem' : '' %>. Wkrótce zweryfikujemy płatność i przejdziemy do realizacji zamówienia. Możesz sprawdzić status swojego zamówienia w <a class="text-anchor" href="/moje-konto/historia">historii zamówień</a> oraz <a class="text-anchor" href="/zamowienie/<%= order.id %>?login=<%= orderLogin %>">pod tym linkiem</a>.</p>
                 <% } %>
 
                 <div class="list cart-list">

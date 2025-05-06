@@ -22,7 +22,8 @@ module.exports = function makeListOrders({ ordersDb, parseDate }) {
                     date: parseDate(result.rows[i].date),
                     price: result.rows[i].price,
                     card: result.rows[i].card,
-                    paymentMade: result.rows[i].payment_made === 0 ? false : true
+                    paymentMade: result.rows[i].payment_made === 0 ? false : true,
+                    completed: result.rows[i].completed === 0 ? false : true
                 }));
             } catch(error) {
                 if(error instanceof AppError && error.appCode === errors.schemaError[0]) {

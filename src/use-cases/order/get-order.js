@@ -18,7 +18,8 @@ module.exports = function makeGetOrder({ ordersDb }) {
             date: parseDate(order.date),
             price: order.price,
             card: order.card,
-            paymentMade: order.payment_made === 0 ? false : true
+            paymentMade: order.payment_made === 0 ? false : true,
+            completed: order.completed === 0 ? false : true
         });
     }
 }

@@ -8,7 +8,8 @@ module.exports = function buildMakeOrder() {
         date,
         price,
         card,
-        paymentMade
+        paymentMade,
+        completed = false
     } = {}, clientProvidedData = false) {
         const error = clientProvidedData ? errors.invalidData : errors.schemaError;
         const isErrorCritical = !clientProvidedData;
@@ -53,6 +54,10 @@ module.exports = function buildMakeOrder() {
             throw new AppError(error, "Order's paymentMade property must be a boolean.", ['Payment made'], paymentMade, isErrorCritical);
         }
 
-        return { id, userId, productsIds, date, price, card, paymentMade };
+        if(completed !== true && completed !== false) {
+            throw new AppError(error, "Order's completed property must be a boolean.", ['Completed'], completed, isErrorCritical);
+        }
+
+        return { id, userId, productsIds, date, price, card, paymentMade, completed };
     }
 }

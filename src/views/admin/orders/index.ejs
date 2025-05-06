@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <%- include('../../includes/header', { title: "Zarządzanie sklepem" }); %>
+        <link rel="stylesheet" href="<%= path %>css/list.css">
+    </head>
+
+    <body>
+        <%- include('../../includes/nav', { user, cart }); %>
+
+        <div class="container">
+            <main class="text-center">
+                <h1 class="header-no-margin">Zamówienia</h1>
+                <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> <a href="/zarzadzanie-sklepem">Zarządzanie sklepem</a> <i class="icon-right-dir"></i> Zamówienia</div>
+
+                <div class="orders-filters">
+                    <label for="user-filter">Użytkownik:</label>
+                    <select id="user-filter">
+                        <option value="" selected>Wszyscy</option>
+                        <option value="no-account">Bez konta</option>
+
+                        <% for(const user of users) { %>
+                            <option value="<%= user.id %>"><%= user.login %></option>
+                        <% } %>
+                    </select>
+
+                    <label for="date-filter">Data:</label>
+                    <input type="date" id="date-filter">
+
+                    <label for="payment-filter">Płatność:</label>
+                    <select id="payment-filter">
+                        <option value="">Wszystko</option>
+                        <option value="true">Zrealizowana</option>
+                        <option value="false">Oczekująca</option>
+                    </select>
+
+                    <label for="completed-filter">Stan:</label>
+                    <select id="completed-filter">
+                        <option value="">Wszystko</option>
+                        <option value="true">Zrealizowane</option>
+                        <option value="false">Oczekujące</option>
+                    </select>
+                </div>
+
+                <div class="list" id="orders-list"></div>
+            </main>
+        </div>
+
+        <script>
+            const users = JSON.parse('<%- JSON.stringify(users) %>');
+            const orders = JSON.parse('<%- JSON.stringify(orders) %>');
+            const deliveriesData = JSON.parse('<%- JSON.stringify(deliveriesData) %>');
+        </script>
+
+        <script src="<%= path %>js/orders-list-filter.js"></script>
+    </body>
+</html>

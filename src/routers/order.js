@@ -49,13 +49,21 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/podsumowanie', async (req, res) => {
-    const cart = req.session.cart;
+    const { cart, user } = req.session;
 
     if(!Array.isArray(cart) || cart.length <= 0 || cart.every(e => e.amount <= 0)) {
         return res.redirect(`/koszyk?action=payment&error=${errors.badRequest[0]}`);
     }
 
     let { login, card } = req.body;
+
+    if(!login) {
+        if(!user) {
+            return res.redirect(`/zamowienie?action=payment&error=${errors.invalidData[0]}`);
+        }
+
+        login = user.login;
+    }
 
     if(!card) {
         return res.redirect(`/zamowienie?action=payment&error=${errors.invalidData[0]}`);
@@ -136,7 +144,7 @@ router.post('/podsumowanie', async (req, res) => {
         from: process.env.MAIL_USER,
         to: login,
         subject: `Szosa Sklep - zamówienie #${order.id}`,
-        html: `<h1>Dziękujemy za zakup!</h1><p>Po potwierdzeniu płatności niezwłocznie przejdziemy do realizacji zamówienia. <br>Śledź swoje zamówienie <a href="http://localhost:3000/moje-konto/historia/${order.id}">pod tym linkiem</a>.</p>`
+        html: `<h1>Dziękujemy za zakup!</h1><p>Po potwierdzeniu płatności niezwłocznie przejdziemy do realizacji zamówienia. <br>Śledź swoje zamówienie <a href="http://localhost:3000/zamowienie/${order.id}?login=${login}">pod tym linkiem</a>.</p>`
     }
 
     const mailSent = await sendMail(mailOptions);
@@ -146,6 +154,7 @@ router.post('/podsumowanie', async (req, res) => {
         user: req.session.user,
         cart: req.session.cart,
         orderCart: cart,
+        orderLogin: login,
         products: products,
         order: order,
         deliveryData: deliveryData,

@@ -11,10 +11,10 @@ module.exports = function makeGetDeliveryData({ deliveryDataDb }) {
         }
 
         return makeDeliveryData({
-            orderId: deliveryData.orderId,
+            orderId: deliveryData.order_id,
             phone: deliveryData.phone,
-            firstName: deliveryData.firstName,
-            lastName: deliveryData.lastName,
+            firstName: deliveryData.first_name,
+            lastName: deliveryData.last_name,
             street: deliveryData.street,
             house: deliveryData.house,
             apartment: deliveryData.apartment,

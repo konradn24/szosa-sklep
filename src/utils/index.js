@@ -20,4 +20,8 @@ function parseDate(sqlDate) {
     return date;
 }
 
-module.exports = { parseDate };
+function countOccurence(arr, val) {
+    return arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
+}
+
+module.exports = { nameToUrl, parseDate, countOccurence };

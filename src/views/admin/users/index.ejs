@@ -2,7 +2,7 @@
 <html lang="pl">
     <head>
         <%- include('../../includes/header', { title: "Zarządzanie sklepem" }); %>
-        <link rel="stylesheet" href="<%= altPath %>css/list.css">
+        <link rel="stylesheet" href="<%= path %>css/list.css">
     </head>
 
     <body>
@@ -17,11 +17,12 @@
                     <% for(let i = 0; i < users.length; i++) { %>
                         <div class="row-space-between">
                             <div>
-                                <div class="item-title"><i class="icon-user"></i><%= users[i].name %></div>
+                                <div class="item-title"><i class="icon-user"></i><%= users[i].name %><%- users[i].admin ? ` <span style="color: #ffbb00;">(admin)</span>` : '' %></div>
                                 <div class="item-property"><%= users[i].login %></div>
                             </div>
 
                             <ul class="item-actions">
+                                <li><a href="/zarzadzanie-sklepem/zamowienia?user=<%= users[i].id %>"><i class="icon-basket"></i> Zamówienia (<%= users[i].ordersCount %>)</a></li>
                                 <li>
                                     <% if(users[i].admin) { %>
                                         <a href="javascript:{}" style="color: #ff0000;" onclick="showAddAdminForm()"><i class="icon-cancel"></i> Usuń uprawnienia</a>

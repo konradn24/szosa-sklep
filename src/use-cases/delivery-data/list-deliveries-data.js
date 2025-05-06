@@ -3,7 +3,7 @@ const { AppError, errors } = require("../../utils/errors");
 const logger = require("../../services/logger");
 
 module.exports = function makeListDeliveriesData({ deliveryDataDb }) {
-    return async function listDeliveriesData({ userId }) {
+    return async function listDeliveriesData({ userId } = { userId: null }) {
         const result = userId ? await deliveryDataDb.findAllByUserId({ id: userId }) : await deliveryDataDb.findAll();
 
         if(result.rows.length === 0) {
@@ -16,10 +16,10 @@ module.exports = function makeListDeliveriesData({ deliveryDataDb }) {
         for(var i = 0; i < result.rows.length; i++) {
             try {
                 deliveriesData.push(makeDeliveryData({
-                    orderId: result.rows[i].orderId,
+                    orderId: result.rows[i].order_id,
                     phone: result.rows[i].phone,
-                    firstName: result.rows[i].firstName,
-                    lastName: result.rows[i].lastName,
+                    firstName: result.rows[i].first_name,
+                    lastName: result.rows[i].last_name,
                     street: result.rows[i].street,
                     house: result.rows[i].house,
                     apartment: result.rows[i].apartment,
