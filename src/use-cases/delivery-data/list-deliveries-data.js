@@ -24,7 +24,8 @@ module.exports = function makeListDeliveriesData({ deliveryDataDb }) {
                     house: result.rows[i].house,
                     apartment: result.rows[i].apartment,
                     postal: result.rows[i].postal,
-                    city: result.rows[i].city
+                    city: result.rows[i].city,
+                    email: result.rows[i].email
                 }));
             } catch(error) {
                 if(error instanceof AppError && error.appCode === errors.schemaError[0]) {

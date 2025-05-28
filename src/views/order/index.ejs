@@ -20,7 +20,7 @@
                 <% } %>
 
                 <form class="order-form" method="post" action="/zamowienie/podsumowanie">
-                    <input class="small-input" type="email" name="login" placeholder="Adres E-mail" <%- user ? `value="${user.login}" disabled` : '' %> required>
+                    <input class="small-input" type="email" name="email" placeholder="Adres E-mail" <%- user ? `value="${user.login}" disabled` : '' %> required>
                     <input class="small-input" type="text" name="phone" placeholder="Numer telefonu" required>
 
                     <input class="small-input" type="text" name="firstName" placeholder="Imię" required>

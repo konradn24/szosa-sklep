@@ -5,6 +5,7 @@ module.exports = function buildMakeOrder() {
         id,
         userId = null,
         productsIds,
+        productsAmount,
         date,
         price,
         card,
@@ -31,7 +32,15 @@ module.exports = function buildMakeOrder() {
         }
 
         if(!Array.isArray(productsIds) || productsIds.length <= 0) {
-            throw new AppError(error, "Order's products IDs must be a valid array.", ['Product ID'], [productsIds], isErrorCritical);
+            throw new AppError(error, "Order's products IDs must be a valid array.", ['Products IDs'], [productsIds], isErrorCritical);
+        }
+
+        if(!productsAmount) {
+            throw new AppError(error, "Order must have a products' amount.", null, null, isErrorCritical);
+        }
+
+        if(!Array.isArray(productsAmount) || productsAmount.length <= 0) {
+            throw new AppError(error, "Order's products' amount must be a valid array.", ['Products amount'], [productsAmount], isErrorCritical);
         }
 
         if(!date) {
@@ -58,6 +67,6 @@ module.exports = function buildMakeOrder() {
             throw new AppError(error, "Order's completed property must be a boolean.", ['Completed'], completed, isErrorCritical);
         }
 
-        return { id, userId, productsIds, date, price, card, paymentMade, completed };
+        return { id, userId, productsIds, productsAmount, date, price, card, paymentMade, completed };
     }
 }

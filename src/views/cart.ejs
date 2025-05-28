@@ -24,7 +24,7 @@
     
                             <div class="row-space-between">
                                 <div>
-                                    <a class="d-block row" href="/produkt/<%= product.url %>">
+                                    <a class="text-anchor d-block row" style="text-decoration: none;" href="/produkt/<%= product.url %>">
                                         <img src="/img/<%= product.imageUrl ? `uploads/${product.imageUrl}` : 'default.jpg' %>" alt="Obrazek poglądowy produktu">
                                         <div class="product-info">
                                             <div class="item-title"><%= product.name %> <i>(<%= cart[i].amount %>)</i></div>

@@ -30,7 +30,7 @@
 
                         <div class="row-space-between">
                             <div>
-                                <a class="text-anchor d-block row" href="/produkt/<%= product.url %>">
+                                <a class="text-anchor d-block row" style="text-decoration: none;" href="/produkt/<%= product.url %>">
                                     <img src="/img/<%= product.imageUrl ? `uploads/${product.imageUrl}` : 'default.jpg' %>" alt="Obrazek poglądowy produktu">
                                     <div class="product-info">
                                         <div class="item-title"><%= product.name %> <i>(<%= orderCart[i].amount %>)</i></div>
@@ -46,14 +46,19 @@
             
                 <div class="divide-horizontal"></div>
 
-                <div style="text-align: left; margin: 0 auto; margin-top: 40px; width: 200px;">
-                    <h3>Szczegóły wysyłki:</h3>
+                <div style="text-align: left; margin: 0 auto; margin-top: 40px; width: 400px;">
+                    <h3 style="text-align: center;">Szczegóły wysyłki:</h3>
                     <% if(!deliveryData) { %>
-                        <p style="color: red;"><i class="icon-attention"></i> Niestety wystąpił problem z zapisaniem danych do wysyłki. Jak najszybciej skontaktujemy się z Tobą poprzez adres E-mail, przepraszamy za utrudnienia.</p>
+                        <p style="color: red; text-align: center;">
+                            <i class="icon-attention"></i> 
+                            Niestety wystąpił problem z zapisaniem danych do wysyłki. Jak najszybciej skontaktujemy się z Tobą poprzez adres E-mail, jeśli jesteś 
+                            aktualnie zalogowany na swoje konto. W przeciwnym razie, prosimy o kontakt. Przepraszamy za utrudnienia!
+                        </p>
                     <% } else { %>
-                        <span>Numer telefonu: <b><%= deliveryData.phone %></b></span><br>
                         <span>Imię: <b><%= deliveryData.firstName %></b></span><br>
                         <span>Nazwisko: <b><%= deliveryData.lastName %></b></span><br>
+                        <span>Adres E-mail: <b><%= deliveryData.email %></b></span><br>
+                        <span>Numer telefonu: <b><%= deliveryData.phone %></b></span><br>
                         <span>Ulica: <b><%= deliveryData.street %></b></span><br>
                         <span>Numer domu: <b><%= deliveryData.house %></b></span><br>
                         <span>Numer lokalu: <b><%= deliveryData.apartment %></b></span><br>

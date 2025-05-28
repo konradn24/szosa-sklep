@@ -19,6 +19,7 @@ module.exports = function makeListOrders({ ordersDb, parseDate }) {
                     id: result.rows[i].id,
                     userId: result.rows[i].user_id,
                     productsIds: result.rows[i].products_ids.split(',').map(Number),
+                    productsAmount: result.rows[i].products_amount.split(',').map(Number),
                     date: parseDate(result.rows[i].date),
                     price: result.rows[i].price,
                     card: result.rows[i].card,

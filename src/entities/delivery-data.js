@@ -10,7 +10,8 @@ module.exports = function buildMakeVerification() {
         house,
         apartment = '',
         postal,
-        city
+        city,
+        email
     } = {}, clientProvidedData = false) {
         const error = clientProvidedData ? errors.invalidData : errors.schemaError;
         const isErrorCritical = !clientProvidedData;
@@ -51,6 +52,10 @@ module.exports = function buildMakeVerification() {
             throw new AppError(error, "Delivery data must have a city.", null, null, isErrorCritical);
         }
 
-        return { orderId, phone, firstName, lastName, street, house, apartment, postal, city };
+        if(!email) {
+            throw new AppError(error, "Delivery data must have an email.", null, null, isErrorCritical);
+        }
+
+        return { orderId, phone, firstName, lastName, street, house, apartment, postal, city, email };
     }
 }

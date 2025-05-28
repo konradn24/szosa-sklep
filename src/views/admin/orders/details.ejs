@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <%- include('../../includes/header', { title: "Zarządzanie sklepem" }); %>
+        <link rel="stylesheet" href="<%= path %>css/list.css">
+        <link rel="stylesheet" href="<%= path %>css/cart.css">
+    </head>
+
+    <body>
+        <%- include('../../includes/nav', { user, cart }); %>
+
+        <div class="container">
+            <main class="text-center">
+                <h1 class="header-no-margin">Zamówienie #<%= order.id %></h1>
+                <div class="path">
+                    <a href="/">Strona główna</a> <i class="icon-right-dir"></i> <a href="/zarzadzanie-sklepem">Zarządzanie sklepem</a> 
+                    <i class="icon-right-dir"></i> <a href="/zarzadzanie-sklepem/zamowienia">Zamówienia</a> <i class="icon-right-dir"></i> Szczegóły zamówienia 
+                </div>
+
+                <div class="list cart-list">
+                    <% for(const product of products) { %>
+                        <% if(product) { %>
+                            <div class="row-space-between">
+                                <div>
+                                    <a class="text-anchor d-block row" style="text-decoration: none;" href="/produkt/<%= product.url %>">
+                                        <img src="/img/<%= product.imageUrl ? `uploads/${product.imageUrl}` : 'default.jpg' %>" alt="Obrazek poglądowy produktu">
+                                        <div class="product-info">
+                                            <div class="item-title"><%= product.name %> <i>(<%= product.orderedAmount %>)</i></div>
+                                            <div class="item-property"><b><%= product.price %> PLN</b></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        <% } else { %>
+                            <div class="row-space-between">
+                                <div>
+                                    <a class="text-anchor d-block row" style="text-decoration: none;" href="#">
+                                        <img src="/img/default.jpg" alt="Obrazek poglądowy produktu">
+                                        <div class="product-info">
+                                            <div class="item-title" style="color: red;">???</div>
+                                            <div class="item-property" style="color: red;"><b>NIE ZNALEZIONO TAKIEGO PRODUKTU!</b></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% } %>
+                </div>
+
+                <h3 style="text-decoration: underline;">Zapłacono: <%= (Math.round(order.price * 100) / 100).toFixed(2) %> PLN</h3>
+            
+                <div class="divide-horizontal"></div>
+
+                <div style="text-align: left; margin: 0 auto; margin-top: 40px; width: 50%;">
+                    <h3 style="text-align: center;">Szczegóły wysyłki:</h3>
+                    <% if(!deliveryData) { %>
+                        <p style="color: red; text-align: center;"><i class="icon-attention"></i> Brak danych wysyłki!</p>
+                    <% } else { %>
+                        <span>Imię: <b><%= deliveryData.firstName %></b></span><br>
+                        <span>Nazwisko: <b><%= deliveryData.lastName %></b></span><br>
+                        <span>Adres E-mail: <b><%= deliveryData.email %></b></span><br>
+                        <span>Numer telefonu: <b><%= deliveryData.phone %></b></span><br>
+                        <span>Ulica: <b><%= deliveryData.street %></b></span><br>
+                        <span>Numer domu: <b><%= deliveryData.house %></b></span><br>
+                        <span>Numer lokalu: <b><%= deliveryData.apartment %></b></span><br>
+                        <span>Kod pocztowy: <b><%= deliveryData.postal %></b></span><br>
+                        <span>Miasto: <b><%= deliveryData.city %></b></span>
+                    <% } %>
+                </div>
+
+                <form action="/zarzadzanie-sklepem/zamowienia/edytuj?id=<%= order.id %>&completed=true" method="post" style="display: block; margin-top: 3rem;">
+                    <button><i class="icon-ok"></i> Oznacz jako wykonane</button>
+                </form>
+                <a href="/zarzadzanie-sklepem/zamowienia" style="display: block; margin: 20px 0;"><button>Powrót do wszystkich zamówień</button></a>
+            </main>
+        </div>
+    </body>
+</html>

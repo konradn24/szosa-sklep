@@ -15,6 +15,7 @@ module.exports = function makeGetOrder({ ordersDb }) {
             id: order.id,
             userId: order.user_id,
             productsIds: order.products_ids.split(',').map(Number),
+            productsAmount: order.products_amount.split(',').map(Number),
             date: parseDate(order.date),
             price: order.price,
             card: order.card,

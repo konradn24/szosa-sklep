@@ -67,21 +67,25 @@ function refresh() {
     for(const order of filteredOrders) {
         const data = deliveriesData.find(e => e.orderId === order.id);
 
-        if(!data) {
-            continue;
-        }
-
         const item = document.createElement('div');
         item.classList.add('row-space-between');
 
+        const payment = order.paymentMade ? 
+            '<span style="color: green;">(płatność: <i class="icon-ok-circled"></i>)</span>' :
+            '<span style="color: red;">(płatność: <i class="icon-cancel-circled"></i>)</span>';
+        
+        const completed = order.completed ? 
+            '<span style="color: green;">(zrealizowane: <i class="icon-ok-circled"></i>)</span>' :
+            '<span style="color: red;">(zrealizowane: <i class="icon-cancel-circled"></i>)</span>';
+
         item.innerHTML = `
             <div>
-                <div class="item-title"><i class="icon-basket"></i> Zamówienie #${order.id} (${(Math.round(order.price * 100) / 100).toFixed(2)} PLN) - ${data.email}</div>
-                <div class="item-property">${new Date(order.date).toLocaleString('pl-PL')} &nbsp; (płatność: <i class="icon-${order.paymentMade ? 'ok' : 'cancel'}-circled"></i>) (zrealizowane: <i class="icon-${order.completed ? 'ok' : 'cancel'}-circled"></i>)</div>
+                <div class="item-title"><i class="icon-basket"></i> Zamówienie #${order.id} (${(Math.round(order.price * 100) / 100).toFixed(2)} PLN) - ${data ? data.email : '???'}</div>
+                <div class="item-property">${new Date(order.date).toLocaleString('pl-PL')} &nbsp; ${payment} ${completed}</div>
             </div>
 
             <ul class="item-actions">
-                <li><a href="/zarzadzanie-sklepem/zamowienia/${order.id}"><i class="icon-menu"></i></a></li>
+                <li><a href="/zarzadzanie-sklepem/zamowienia/szczegoly?id=${order.id}"><i class="icon-menu"></i></a></li>
                 ${order.paymentMade ? '' : htmlActionPayment}
                 ${order.completed ? '' : htmlActionCompleted}
             </ul>

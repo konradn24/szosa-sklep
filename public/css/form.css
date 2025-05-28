@@ -24,6 +24,13 @@ input[type="email"], input[type="password"], input[type="text"] {
     font-size: 14px;
 }
 
+select, input[type="date"] {
+    border-radius: 5px;
+    border: 1px solid #000;
+    padding: 4px;
+    font-size: 14px;
+}
+
 .order-form {
     width: 50%;
     margin: 0 auto;
@@ -48,4 +55,12 @@ input[type="email"], input[type="password"], input[type="text"] {
 .order-form .inputs-row {
     display: flex;
     flex-direction: row;
+}
+
+.orders-filters {
+    margin-bottom: 1.4rem;
+}
+
+.orders-filters label {
+    margin-left: 1rem;
 }

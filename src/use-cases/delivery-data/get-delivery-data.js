@@ -7,7 +7,7 @@ module.exports = function makeGetDeliveryData({ deliveryDataDb }) {
         const deliveryData = result.rows[0];
 
         if(!deliveryData) {
-            throw new AppError(errors.notFound, "Delivery data not found.", ['ID'], [id]);
+            throw new AppError(errors.notFound, "Delivery data not found.", ['Order ID'], [orderId]);
         }
 
         return makeDeliveryData({
@@ -19,7 +19,8 @@ module.exports = function makeGetDeliveryData({ deliveryDataDb }) {
             house: deliveryData.house,
             apartment: deliveryData.apartment,
             postal: deliveryData.postal,
-            city: deliveryData.city
+            city: deliveryData.city,
+            email: deliveryData.email
         });
     }
 }

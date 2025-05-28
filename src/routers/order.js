@@ -93,7 +93,7 @@ router.post('/podsumowanie', async (req, res) => {
     }
 
     if(orderPrice !== req.session.orderPrice) {
-        logger.error(`Cart order price does not equals session order price!`);
+        logger.error(`Cart order price does not equals session order price.`);
         return res.redirect(`/koszyk?action=payment&error=${errors.badRequest[0]}`);
     }
 
@@ -103,6 +103,7 @@ router.post('/podsumowanie', async (req, res) => {
         order = makeOrder({
             userId: user ? user.id : null,
             productsIds: cart.map(e => e.id),
+            productsAmount: cart.map(e => e.amount),
             date: new Date(Date.now()),
             price: orderPrice,
             card: card,
@@ -115,7 +116,7 @@ router.post('/podsumowanie', async (req, res) => {
         return res.redirect(`/koszyk?action=payment&error=${error.appCode}`);
     }
 
-    const { phone, firstName, lastName, street, house, apartment, postal, city } = req.body;
+    const { phone, firstName, lastName, street, house, apartment, postal, city, email } = req.body;
 
     let deliveryData;
 
@@ -129,7 +130,8 @@ router.post('/podsumowanie', async (req, res) => {
             house: house,
             apartment: apartment,
             postal: postal,
-            city: city
+            city: city, 
+            email: email
         }, true);
         deliveryData = await addDeliveryData({ deliveryData });
     } catch(error) {
