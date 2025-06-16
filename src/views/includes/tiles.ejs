@@ -1,5 +1,10 @@
-<% const amount = Math.min(products.length, max === undefined ? 256 : max); %>
 <% const urlPath = locals.path ? locals.path : ''; %>
+
+<% if(locals.category) { %>
+    <% products = products.filter(product => product.category === category); %>
+<% } %>
+
+<% const amount = Math.min(products.length, max === undefined ? 256 : max); %>
 
 <% if(products && products.length > 0) { %>
     <% for(let i = 0; i < amount; i++) { %>
