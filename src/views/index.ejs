@@ -8,8 +8,6 @@
         <%- include('includes/nav', { user, cart }); %>
 
         <div class="container">
-            <p style="color: red; text-decoration: underline; font-size: 14px;">UWAGA: Ta strona to tylko projekt w celach edukacyjnych! Proszę nie podawać swoich prawdziwych danych.</p>
-
             <main class="text-center">
                 <h1 class="header">Sklep SZOSA</h1>
                 <p>Witaj w sklepie internetowym SZOSA! Oferujemy rowery oraz akcesoria dla pasjonatów kolarstwa szosowego.</p>
@@ -30,5 +28,9 @@
                 <%- include('includes/tiles', { products, max: 4 }); %>
             </article>
         </div>
+
+        <%- include('includes/footer'); %>
+
+        <script src="js/ui-error-handlers/index.js"></script>
     </body> 
 </html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <%- include('includes/header', { title: "Produkty" }); %>
+        <link rel="stylesheet" href="<%= path %>css/form.css">
+    </head>
+
+    <body>
+        <%- include('includes/nav', { user, cart }); %>
+
+        <div class="container">
+            <header class="text-center">
+                <h1 class="header">Sklep SZOSA</h1>
+                <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> Produkty</div>
+                
+                <div class="filters">
+                    <form method="get">
+                        <label for="category-filter">Kategoria:</label>
+                        <select id="category-filter" name="category">
+                            <option value="all" <%= filters.category === 'all' ? 'selected' : '' %>>Wszystko</option>
+                            <option value="rowery" <%= filters.category === 'rowery' ? 'selected' : '' %>>Rowery</option>
+                            <option value="akcesoria" <%= filters.category === 'akcesoria' ? 'selected' : '' %>>Akcesoria</option>
+                            <option value="odziez" <%= filters.category === 'odziez' ? 'selected' : '' %>>Odzież</option>
+                            <option value="trenazery" <%= filters.category === 'trenazery' ? 'selected' : '' %>>Trenażery</option>
+                        </select>
+
+                        <label for="price-filter">Cena:</label>
+                        <select id="price-filter" name="price">
+                            <option value="no-filter" <%= filters.price === 'no-filter' ? 'selected' : '' %>>Brak filtra</option>
+                            <option value="asc" <%= filters.price === 'asc' ? 'selected' : '' %>>Od najniższej</option>
+                            <option value="desc" <%= filters.price === 'desc' ? 'selected' : '' %>>Od najwyższej</option>
+                        </select>
+
+                        <label for="amount-filter">Ilość:</label>
+                        <select id="amount-filter" name="amount">
+                            <option value="no-filter" <%= filters.amount === 'no-filter' ? 'selected' : '' %>>Brak filtra</option>
+                            <option value="asc" <%= filters.amount === 'asc' ? 'selected' : '' %>>Od najniższej</option>
+                            <option value="desc" <%= filters.amount === 'desc' ? 'selected' : '' %>>Od najwyższej</option>
+                        </select>
+
+                        <button type="submit" style="margin-left: 1rem;"><i class="icon-search"></i> Filtruj</button>
+                        <a href="/przegladaj"><button type="button"><i class="icon-trash"></i> Wyczyść</button></a>
+                    </form>
+                </div>
+            </header>
+
+            <main class="product-tiles-container">
+                <%- include('includes/tiles', { products, max: 256 }); %>
+            </main>
+        </div>
+
+        <%- include('includes/footer'); %>
+
+        <script src="<%= path %>js/ui-error-handlers/view-products.js"></script>
+    </body> 
+</html>

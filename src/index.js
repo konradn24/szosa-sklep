@@ -27,14 +27,14 @@ app.use(session({
     rolling: true
 }));
 
-const { root, auth, admin, cart, order } = require("./routers");
+const { root, auth, admin, cart, order, myAccount } = require("./routers");
 
 app.use("/", root);
 app.use("/koszyk", cart);
 app.use("/zamowienie", order);
 app.use("/auth", auth);
 app.use("/zarzadzanie-sklepem", securityMiddleware.checkAdminAccess, admin);
-// app.use("/auth", authRouter);
+app.use("/moje-konto", myAccount);
 
 async function start() {
     try {

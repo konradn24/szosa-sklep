@@ -19,13 +19,13 @@ function showInfo({ title, text }) {
 }
 
 function showWarning({ text }) {
-    popupTitle.innerHTML = '<i class="icon-attention" style="color: #b57a14;"></i>' + (pl ? 'Ostrzeżenie' : 'Warning');
+    popupTitle.innerHTML = '<i class="icon-attention" style="color: #b57a14;"></i> Ostrzeżenie';
     popupText.innerHTML = text;
     openPopup();
 }
 
 function showError({ text }) {
-    popupTitle.innerHTML = '<i class="icon-cancel-circled" style="color: red;"></i>' + (pl ? 'Błąd' : 'Error');
+    popupTitle.innerHTML = '<i class="icon-cancel-circled" style="color: red;"></i> Błąd';
     popupText.innerHTML = text;
     openPopup();
 }

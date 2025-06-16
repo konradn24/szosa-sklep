@@ -2,11 +2,12 @@ const express = require('express');
 
 const { listUsers } = require('../../use-cases/user');
 const { listProducts } = require('../../use-cases/product');
-const { getOrder, listOrders } = require('../../use-cases/order');
+const { getOrder, listOrders, updateOrder, removeOrder } = require('../../use-cases/order');
 const { getDeliveryData, listDeliveriesData } = require('../../use-cases/delivery-data')
 
 const { countOccurence } = require('../../utils');
 const { errors } = require('../../utils/errors');
+const { sendMail } = require('../../services/mailer');
 const logger = require('../../services/logger');
 
 const router = express.Router();
@@ -111,6 +112,33 @@ router.get('/szczegoly', async (req, res) => {
         deliveryData: deliveryData,
         products: orderedProducts
     });
+});
+
+router.post('/edytuj', async (req, res) => {
+    const { id, payment, completed } = req.query;
+
+    if(!id || !payment && !completed) {
+        return res.redirect(`/zarzadzanie-sklepem/zamowienia?action=edit&error=${errors.invalidData[0]}`);
+    }
+
+    try {
+        const order = await getOrder({ id });
+
+        if(payment) {
+            order.paymentMade = true;
+        }
+
+        if(completed) {
+            order.paymentMade = true;
+            order.completed = true;
+        }
+
+        await updateOrder({ order });
+    } catch(error) {
+        return res.redirect(`/zarzadzanie-sklepem/zamowienia?action=edit&error=${error.appCode}`);
+    }
+
+    res.redirect(`/zarzadzanie-sklepem/zamowienia?action=edit&success=true`);
 });
 
 module.exports = router;

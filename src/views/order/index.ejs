@@ -9,8 +9,6 @@
         <%- include('../includes/nav', { user, cart }); %>
 
         <div class="container">
-            <p style="color: red; text-decoration: underline; font-size: 14px;">UWAGA: Ta strona to tylko projekt w celach edukacyjnych! Proszę nie podawać swoich prawdziwych danych.</p>
-
             <main class="text-center">
                 <h1 class="header-no-margin">Złóż zamówienie</h1>
                 <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> Zamówienie</div>
@@ -38,11 +36,15 @@
 
                     <h3 style="text-decoration: underline;">Do zapłaty: <%= (Math.round(orderPrice * 100) / 100).toFixed(2) %> PLN</h3>
 
-                    <button id="submit">Kupuję i płacę</button>
+                    <button id="submit"><i class="icon-ok"></i> Kupuję i płacę</button>
                 </form>
             </main>
         </div>
 
         <script src="<%= path %>js/order-form.js"></script>
+
+        <%- include('../includes/footer'); %>
+
+        <script src="<%= path %>js/ui-error-handlers/order/index.js"></script>
     </body> 
 </html>

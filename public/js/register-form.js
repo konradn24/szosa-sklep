@@ -20,12 +20,12 @@ function denyForm(inputElement) {
     submitButton.disabled = true;
 }
 
-function showInfo(element, html) {
+function showFormInfo(element, html) {
     element.classList.remove('display-none');
     element.innerHTML = html;
 }
 
-function hideInfo(element) {
+function hideFormInfo(element) {
     element.classList.add('display-none');
 }
 
@@ -35,10 +35,10 @@ nameInput.oninput = async () => {
 
     if(user) {
         denyForm(nameInput);
-        showInfo(nameInfo, '<i class="icon-attention"></i> Ta nazwa użytkownika jest już zajęta!');
+        showFormInfo(nameInfo, '<i class="icon-attention"></i> Ta nazwa użytkownika jest już zajęta!');
     } else {
         allowForm(nameInput);
-        hideInfo(nameInfo);
+        hideFormInfo(nameInfo);
     }
 };
 
@@ -48,10 +48,10 @@ loginInput.oninput = async () => {
 
     if(user) {
         denyForm(loginInput);
-        showInfo(loginInfo, '<i class="icon-attention"></i> Ten login jest już zajęty!');
+        showFormInfo(loginInfo, '<i class="icon-attention"></i> Ten login jest już zajęty!');
     } else {
         allowForm(loginInput);
-        hideInfo(loginInfo);
+        hideFormInfo(loginInfo);
     }
 };
 
@@ -62,11 +62,11 @@ const checkPasswords = () => {
     if(value1 !== value2) {
         denyForm(password1Input);
         denyForm(password2Input);
-        showInfo(passwordInfo, '<i class="icon-attention"></i> Hasła nie są identyczne!');
+        showFormInfo(passwordInfo, '<i class="icon-attention"></i> Hasła nie są identyczne!');
     } else {
         allowForm(password1Input);
         allowForm(password2Input);
-        hideInfo(passwordInfo);
+        hideFormInfo(passwordInfo);
     }
 };
 
@@ -74,16 +74,10 @@ password1Input.oninput = checkPasswords;
 password2Input.oninput = checkPasswords;
 
 async function sha256(message) {
-    // encode as UTF-8
     const msgBuffer = new TextEncoder().encode(message);                    
-
-    // hash the message
     const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-
-    // convert ArrayBuffer to Array
     const hashArray = Array.from(new Uint8Array(hashBuffer));
-
-    // convert bytes to hex string                  
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
     return hashHex;
 }

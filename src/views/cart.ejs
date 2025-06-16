@@ -25,7 +25,10 @@
                             <div class="row-space-between">
                                 <div>
                                     <a class="text-anchor d-block row" style="text-decoration: none;" href="/produkt/<%= product.url %>">
-                                        <img src="/img/<%= product.imageUrl ? `uploads/${product.imageUrl}` : 'default.jpg' %>" alt="Obrazek poglądowy produktu">
+                                        <div class="item-image-container">
+                                            <img src="/img/<%= product.imageUrl ? `uploads/${product.imageUrl}` : 'default.jpg' %>" alt="Obrazek poglądowy produktu">
+                                        </div>
+                                        
                                         <div class="product-info">
                                             <div class="item-title"><%= product.name %> <i>(<%= cart[i].amount %>)</i></div>
                                             <div class="item-property"><b><%= product.price %> PLN</b></div>
@@ -57,8 +60,12 @@
                     </div>
 
                     <h3 style="text-decoration: underline;">Do zapłaty: <%= (Math.round(orderPrice * 100) / 100).toFixed(2) %> PLN</h3>
+                    
+                    <form method="post" action="/koszyk/wyczysc">
+                        <button><i class="icon-cancel"></i> Wyczyść koszyk</button>
+                    </form>
 
-                    <a href="/zamowienie"><button>Przejdź do zamówienia</button></a>
+                    <a href="/zamowienie"><button style="margin-top: 1rem;"><i class="icon-credit-card"></i> Przejdź do zamówienia</button></a>
                 <% } %>
             </main>
         </div>
@@ -72,5 +79,9 @@
                 document.getElementById(`remove-form-${id}`).submit();
             }
         </script>
-    </body> 
+
+        <%- include('includes/footer'); %>
+
+        <script src="js/ui-error-handlers/cart.js"></script>
+    </body>
 </html>

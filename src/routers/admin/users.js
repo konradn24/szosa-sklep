@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { listUsers } = require('../../use-cases/user');
+const { getUser, listUsers, updateUser } = require('../../use-cases/user');
 const { listOrders } = require('../../use-cases/order');
 
 const { countOccurence } = require('../../utils');
@@ -44,6 +44,25 @@ router.get('/', async (req, res) => {
         cart: req.session.cart,
         users: users
     });
+});
+
+router.post('/edytuj', async (req, res) => {
+    const { id, admin } = req.query;
+
+    if(!id || !admin) {
+        return res.redirect(`/zarzadzanie-sklepem/konta-klientow?action=set-admin&error=${errors.invalidData[0]}`);
+    }
+
+    try {
+        const user = await getUser({ id });
+        user.admin = admin === 'true';
+
+        await updateUser({ user });
+    } catch(error) {
+        return res.redirect(`/zarzadzanie-sklepem/konta-klientow?action=set-admin&error=${error.appCode}`);
+    }
+
+    res.redirect(`/zarzadzanie-sklepem/konta-klientow?action=set-admin&success=true`);
 });
 
 module.exports = router;

@@ -19,7 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
     paymentFilter.onchange = refresh;
     completedFilter.onchange = refresh;
 
-    const params = new URLSearchParams(window.location.search);
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
 
     if(params.user) {
         userFilter.value = params.user;
@@ -86,8 +88,8 @@ function refresh() {
 
             <ul class="item-actions">
                 <li><a href="/zarzadzanie-sklepem/zamowienia/szczegoly?id=${order.id}"><i class="icon-menu"></i></a></li>
-                ${order.paymentMade ? '' : htmlActionPayment}
-                ${order.completed ? '' : htmlActionCompleted}
+                ${order.paymentMade ? '' : htmlActionPayment(order.id)}
+                ${order.completed ? '' : htmlActionCompleted(order.id)}
             </ul>
         `;
 
@@ -95,5 +97,10 @@ function refresh() {
     }
 }
 
-const htmlActionPayment = `<li><a href="javascript:{}" onclick="showSetPaymentForm()" style="color: green;"><i class="icon-credit-card"></i></a></li>`;
-const htmlActionCompleted = `<li><a href="javascript:{}" onclick="showSetCompletedForm()" style="color: green;"><i class="icon-ok"></i></a></li>`;
+function htmlActionPayment(id) {
+    return `<li><a href="javascript:{}" onclick="showSetPaymentForm(this, ${id})" style="color: green;"><i class="icon-credit-card"></i></a></li>`;
+}
+
+function htmlActionCompleted(id) {
+    return `<li><a href="javascript:{}" onclick="showSetCompletedForm(this, ${id})" style="color: green;"><i class="icon-ok"></i></a></li>`;
+}

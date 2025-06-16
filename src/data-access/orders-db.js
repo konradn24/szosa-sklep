@@ -3,6 +3,7 @@ module.exports = function makeOrdersDb({ makeQuery }) {
         findAll,
         findById,
         insert,
+        update,
         remove
     });
 
@@ -17,6 +18,12 @@ module.exports = function makeOrdersDb({ makeQuery }) {
     async function insert({ order }) {
         return await makeQuery({ sql: "INSERT INTO orders (user_id, products_ids, products_amount, date, price, card, payment_made, completed) VALUES (?,?,?,?,?,?,?,?)",
             params: [order.userId, order.productsIds, order.productsAmount, order.date, order.price, order.card, order.paymentMade, order.completed]
+        });
+    }
+
+    async function update({ order }) {
+        return await makeQuery({ sql: "UPDATE orders SET payment_made = ?, completed = ? WHERE id = ?",
+            params: [order.paymentMade, order.completed, order.id]
         });
     }
 

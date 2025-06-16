@@ -45,7 +45,7 @@ router.get("/rejestracja", async (req, res) => {
     try {
         users = await listUsers();
     } catch(error) {
-        logger.error(error);
+        logger.error(`Failed to fetch users. ${error}`);
     }
 
     for(const user of users) {
@@ -60,6 +60,49 @@ router.get("/rejestracja", async (req, res) => {
         path: '../',
         users: users,
         cart: req.session.cart
+    });
+});
+
+router.get("/przegladaj", async (req, res) => {
+    let products = [];
+
+    try {
+        products = await listProducts();
+    } catch(error) {
+        logger.error(`Failed to fetch products. ${error}`);
+    }
+
+    const filters = {};
+    filters.category = req.query.category || 'all';
+    filters.price = req.query.price || 'no-filter';
+    filters.amount = req.query.amount || 'no-filter';
+
+    products = products.filter(product => {
+        if(filters.category !== 'all' && product.category !== filters.category) {
+            return false;
+        }
+
+        return true;
+    });
+
+    if(filters.price === 'asc') {
+        products = products.sort((a, b) => a.price - b.price);
+    } else if(filters.price === 'desc') {
+        products = products.sort((a, b) => b.price - a.price);
+    }
+
+    if(filters.amount === 'asc') {
+        products = products.sort((a, b) => a.amount - b.amount);
+    } else if(filters.amount === 'desc') {
+        products = products.sort((a, b) => b.amount - a.amount);
+    }
+
+    res.render("view-products", {
+        path: '../',
+        user: req.session.user,
+        cart: req.session.cart,
+        products: products,
+        filters: filters
     });
 });
 
@@ -78,7 +121,7 @@ router.get("/produkt/:productUrl", async (req, res) => {
 
     if(!product) {
         logger.error(`Product of URL ${productUrl} not found.`);
-        return res.redirect(`/?action=access&error=${errors.notFound}`);
+        return res.redirect(`/?action=access&error=${errors.notFound[0]}`);
     }
 
     if(req.query.action !== 'cart-add') {

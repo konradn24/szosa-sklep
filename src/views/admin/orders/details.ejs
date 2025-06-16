@@ -47,7 +47,11 @@
                     <% } %>
                 </div>
 
-                <h3 style="text-decoration: underline;">Zapłacono: <%= (Math.round(order.price * 100) / 100).toFixed(2) %> PLN</h3>
+                <% if(order.paymentMade) { %>
+                    <h3 style="text-decoration: underline;">Zapłacono: <%= (Math.round(order.price * 100) / 100).toFixed(2) %> PLN</h3>
+                <% } else { %>
+                    <h3 style="text-decoration: underline;">Do zapłaty: <%= (Math.round(order.price * 100) / 100).toFixed(2) %> PLN</h3>
+                <% } %>
             
                 <div class="divide-horizontal"></div>
 
@@ -68,11 +72,26 @@
                     <% } %>
                 </div>
 
-                <form action="/zarzadzanie-sklepem/zamowienia/edytuj?id=<%= order.id %>&completed=true" method="post" style="display: block; margin-top: 3rem;">
-                    <button><i class="icon-ok"></i> Oznacz jako wykonane</button>
-                </form>
+                <% if(!order.paymentMade) { %>
+                    <div style="display: block; margin-top: 3rem;">
+                        <button onclick="showSetPaymentForm(this, <%= order.id %>)"><i class="icon-credit-card"></i> Oznacz jako opłacone</button>
+                    </div>
+                <% } else if(!order.completed) { %>
+                    <div style="display: block; margin-top: 3rem;">
+                        <button onclick="showSetCompletedForm(this, <%= order.id %>)"><i class="icon-ok"></i> Oznacz jako wykonane</button>
+                    </div>
+                <% } else { %>
+                    <h3 style="color: green;">
+                        <i class="icon-ok"></i> Wykonane
+                    </h3>
+                <% } %>
+                
                 <a href="/zarzadzanie-sklepem/zamowienia" style="display: block; margin: 20px 0;"><button>Powrót do wszystkich zamówień</button></a>
             </main>
         </div>
+
+        <%- include('../../includes/footer'); %>
+
+        <script src="<%= path %>js/ui-error-handlers/admin/orders.js"></script>
     </body>
 </html>

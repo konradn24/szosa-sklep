@@ -57,10 +57,10 @@ select, input[type="date"] {
     flex-direction: row;
 }
 
-.orders-filters {
+.filters {
     margin-bottom: 1.4rem;
 }
 
-.orders-filters label {
+.filters label {
     margin-left: 1rem;
 }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <%- include('../includes/header', { title: "Moje konto" }); %>
+        <link rel="stylesheet" href="<%= path %>css/list.css">
+        <link rel="stylesheet" href="<%= path %>css/form.css">
+    </head>
+
+    <body>
+        <%- include('../includes/nav', { user, cart }); %>
+
+        <div class="container">
+            <main class="text-center">
+                <h1 class="header-no-margin">Moje konto</h1>
+                <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> Moje konto
+
+                <h3>Zamówienia</h3>
+
+                <div class="orders-filters">
+                    <label for="date-filter">Data:</label>
+                    <input type="date" id="date-filter">
+
+                    <label for="payment-filter">Płatność:</label>
+                    <select id="payment-filter">
+                        <option value="">Wszystko</option>
+                        <option value="true">Zrealizowana</option>
+                        <option value="false">Oczekująca</option>
+                    </select>
+
+                    <label for="completed-filter">Stan:</label>
+                    <select id="completed-filter">
+                        <option value="">Wszystko</option>
+                        <option value="true">Zrealizowane</option>
+                        <option value="false">Oczekujące</option>
+                    </select>
+                </div>
+
+                <div class="list" id="orders-list"></div>
+
+                <h3>Ustawienia</h3>
+                <form action="/moje-konto/zmiana-hasla" method="post">
+                    <div class="form-input">
+                        <label for="password">Nowe hasło:</label>
+                        <input type="password" name="password" id="password" oninput="checkPasswords()" required>
+                    </div>
+
+                    <div class="form-input">
+                        <label for="passwordRepeat">Powtórz nowe hasło:</label>
+                        <input type="password" name="passwordRepeat" id="passwordRepeat" oninput="checkPasswords()" required>
+                    </div>
+
+                    <p style="color: red; display: none;" id="passwords-prompt"><i class="icon-attention"></i> Hasła nie są identyczne!</p>
+
+                    <button>Zmień hasło</button>
+                </form>
+            </main>
+        </div>
+
+        <script>
+            const orders = JSON.parse('<%- JSON.stringify(orders) %>');
+
+            const passwordInput = document.getElementById('password');
+            const passwordRepeatInput = document.getElementById('passwordRepeat');
+            const passwordsPrompt = document.getElementById('passwords-prompt');
+
+            function checkPasswords() {
+                if(passwordInput.value !== passwordRepeatInput.value) {
+                    passwordsPrompt.style.display = 'block';
+                } else {
+                    passwordsPrompt.style.display = 'none';
+                }
+            }
+        </script>
+
+        <script src="<%= path %>js/user-orders-list-filter.js"></script>
+
+        <%- include('../includes/footer'); %>
+
+        <script src="<%= path %>js/ui-error-handlers/my-account.js"></script>
+    </body>
+</html>

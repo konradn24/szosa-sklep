@@ -25,9 +25,9 @@
                                 <li><a href="/zarzadzanie-sklepem/zamowienia?user=<%= users[i].id %>"><i class="icon-basket"></i> Zamówienia (<%= users[i].ordersCount %>)</a></li>
                                 <li>
                                     <% if(users[i].admin) { %>
-                                        <a href="javascript:{}" style="color: #ff0000;" onclick="showAddAdminForm()"><i class="icon-cancel"></i> Usuń uprawnienia</a>
+                                        <a href="javascript:{}" style="color: #ff0000;" onclick="showDeleteAdminForm(this, <%= users[i].id %>, '<%= users[i].name %>')"><i class="icon-cancel"></i> Usuń uprawnienia</a>
                                     <% } else { %>
-                                        <a href="javascript:{}" style="color: #ffbb00;" onclick="showDeleteAdminForm()"><i class="icon-star"></i> Nadaj uprawnienia</a>
+                                        <a href="javascript:{}" style="color: #ffbb00;" onclick="showAddAdminForm(this, <%= users[i].id %>, '<%= users[i].name %>')"><i class="icon-star"></i> Nadaj uprawnienia</a>
                                     <% } %>
                                 </li>
                             </ul>
@@ -36,5 +36,9 @@
                 </div>
             </main>
         </div>
+
+        <%- include('../../includes/footer'); %>
+
+        <script src="<%= path %>js/ui-error-handlers/admin/users.js"></script>
     </body> 
 </html>

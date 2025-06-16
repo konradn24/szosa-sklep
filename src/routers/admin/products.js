@@ -204,7 +204,7 @@ router.post('/edytuj', async (req, res) => {
         return res.redirect(`/zarzadzanie-sklepem/produkty?action=edit&error=${error.appCode}`);
     }
 
-    res.redirect(`/zarzadzanie-sklepem/produkty?action=edit&success=${id}`);
+    res.redirect(`/zarzadzanie-sklepem/produkty?action=edit&success=true`);
 });
 
 router.post('/usun', async (req, res) => {

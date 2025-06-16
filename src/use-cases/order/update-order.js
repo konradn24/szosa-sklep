@@ -1,5 +1,6 @@
 const { makeOrder } = require("../../entities");
 const { AppError, errors } = require("../../utils/errors");
+const { parseDate } = require("../../utils");
 
 module.exports = function makeUpdateOrder({ ordersDb }) {
     return async function updateOrder({ order }) {
@@ -20,7 +21,7 @@ module.exports = function makeUpdateOrder({ ordersDb }) {
         return makeOrder({
             id: updatedOrder.id,
             userId: updatedOrder.user_id,
-            productId: updatedOrder.products_ids.split(',').map(Number),
+            productsIds: updatedOrder.products_ids.split(',').map(Number),
             productsAmount: updatedOrder.products_amount.split(',').map(Number),
             date: parseDate(updatedOrder.date),
             price: updatedOrder.price,

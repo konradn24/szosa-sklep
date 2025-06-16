@@ -1,18 +1,24 @@
 <% const amount = Math.min(products.length, max === undefined ? 256 : max); %>
+<% const urlPath = locals.path ? locals.path : ''; %>
 
 <% if(products && products.length > 0) { %>
     <% for(let i = 0; i < amount; i++) { %>
         <% const product = products[i]; %>
 
         <a class="product-tile" href="/produkt/<%= product.url %>">
-            <% if(product.imageUrl) { %>
-                <img src="img/uploads/<%= product.imageUrl %>" alt="Obraz poglądowy produktu">
-            <% } else { %>
-                <img src="img/default.jpg" alt="Ikona braku obrazu poglądowego">
-            <% } %>
+            <div class="product-image-container">
+                <% if(product.imageUrl) { %>
+                    <img src="<%= urlPath %>img/uploads/<%= product.imageUrl %>" alt="Obraz poglądowy produktu">
+                <% } else { %>
+                    <img src="<%= urlPath %>img/default.jpg" alt="Ikona braku obrazu poglądowego">
+                <% } %>
+            </div>
 
-            <p><%= product.name %></p>
-            <p><%= (Math.round(product.price * 100) / 100).toFixed(2); %> PLN</p>
+            <div>
+                <p><%= product.name %></p>
+                <p style="margin-bottom: 10px;"><%= (Math.round(product.price * 100) / 100).toFixed(2); %> PLN</p>
+                <p <%= product.amount < 1 ? 'style="color: red;"' : '' %>>W magazynie: <%= product.amount %></p>
+            </div>
 
             <div class="tile-overlay"></div>
         </a>

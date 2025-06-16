@@ -25,9 +25,15 @@
                         <input type="password" name="password" id="password" required>
                     </div>
 
+                    <p id="error" style="color: red; display: none;"><i class="icon-attention"></i> Niepoprawny login lub hasło!</p>
+
                     <button>Zaloguj się</button>
                 </form>
             </main>
         </div>
+
+        <%- include('../includes/footer'); %>
+
+        <script src="<%= path %>js/ui-error-handlers/auth/login.js"></script>
     </body> 
 </html>

@@ -5,26 +5,27 @@
         <% const product = products[i]; %>
         <% const ordersCount = orders.filter(order => order.productsIds.includes(product.id)).length; %>
 
-        <div class="product-tile-div">
-            <a class="product-tile" href="/produkt/<%= product.url %>">
+        <div class="product-tile">
+            <div class="product-image-container">
                 <% if(product.imageUrl) { %>
                     <img src="../img/uploads/<%= product.imageUrl %>" alt="Obraz poglądowy produktu">
                 <% } else { %>
                     <img src="../img/default.jpg" alt="Ikona braku obrazu poglądowego">
                 <% } %>
-    
+            </div>
+
+            <div>
                 <p><%= product.name %></p>
-                <p><%= (Math.round(product.price * 100) / 100).toFixed(2); %> PLN</p>
-            </a>
-            
-            <div class="product-tile-controls">
+                <p style="margin-bottom: 10px;"><%= (Math.round(product.price * 100) / 100).toFixed(2); %> PLN</p>
+                <p <%= product.amount < 1 ? 'style="color: red;"' : '' %>>W magazynie: <%= product.amount %></p>
+            </div>
+
+            <div style="margin: 20px 0;">
                 <a href="/zarzadzanie-sklepem/produkty/edytuj?id=<%= product.id %>">
                     <button>Edytuj</button>
                 </a>
                 
-                <form method="post" action="/zarzadzanie-sklepem/produkty/usun?id=<%= product.id %>">
-                    <button>Usuń</button>
-                </form>
+                <button onclick="showDeleteProductForm(this, <%= product.id %>, '<%= product.name %>')">Usuń</button>
             </div>
 
             <div <%- product.views === 0 ? 'style="color: red;"' : '' %>>Wyświetlenia: <%= product.views %></div>

@@ -10,12 +10,19 @@
     --dark-secondary-bg: #eee;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
     font-family: 'Atkinson Hyperlegible';
 	font-size: 18px;
     margin: 0;
     background-color: var(--primary-bg);
     color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 a {
@@ -40,6 +47,7 @@ a {
 .container {
     width: 80%;
     margin: 0 auto;
+    flex: 1;
 }
 
 .logo {
@@ -55,23 +63,11 @@ a {
     width: 100%;
 }
 
-.product-tile-div {
-    width: calc(25% - 20px);
-    height: auto;
-    margin: 10px 10px;
-    text-align: center;
-    text-decoration: none;
-    background-color: var(--secondary-bg);
-    border-radius: 10px;
-}
-
-.product-tile-div .product-tile {
-    width: calc(100% - 10px);
-}
-
 .product-tile {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: calc(25% - 20px);
     height: auto;
     margin: 10px 10px;
@@ -107,10 +103,18 @@ a {
     }
 }
 
-.product-tile img {
-    width: 80%;
+.product-tile .product-image-container {
+    width: 100%;
+    margin: auto 0;
+}
+
+.product-tile .product-image-container img {
+    display: block;
+    width: auto;
     height: auto;
-    margin-top: 10px;
+    max-width: 80%;
+    max-height: 200px;
+    margin: auto auto;
 }
 
 .product-tile a {
@@ -163,6 +167,24 @@ a {
     color: #f00;
 }
 
+.button-red {
+    background-color: red;
+    color: #222;
+}
+
+.button-red:hover {
+    background-color: darkred;
+}
+
+.button-green {
+    background-color: green;
+    color: #222;
+}
+
+.button-green:hover {
+    background-color: darkgreen;
+}
+
 .display-none {
     display: none;
 }
@@ -202,8 +224,23 @@ input[type="number"] {
     justify-content: space-between;
 }
 
+.row-space-evenly {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
 .amount-select {
     padding: 3px 10px;
     border-radius: 10px;
     font-size: 18px;
+}
+
+footer {
+    width: 100%;
+    max-width: 100%;
+    background-color: var(--dark-bg);
+    text-align: center;
+    padding: 6px 0;
+    margin-top: 1.2rem;
 }

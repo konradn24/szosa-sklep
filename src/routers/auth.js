@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
     const { login, password } = req.body;
 
     if(!login || !password) {
-        return res.redirect(`/logowanie?error=${errors.forbidden[0]}`);
+        return res.redirect(`/logowanie?error=${errors.unauthorized[0]}`);
     }
 
     const encryptedPassword = createHash('sha256').update(password).digest('hex');
@@ -32,13 +32,14 @@ router.post('/', async (req, res) => {
 
     req.session.user = authenticated;
 
-    return res.redirect('/?action=login&success=true');
+    return res.redirect(`/?action=login&success=${encodeURIComponent(authenticated.name)}`);
 });
 
 router.post('/logout', (req, res) => {
+    let name = req.session.user ? req.session.user.name : undefined;
     req.session.user = undefined;
 
-    return res.redirect('/?action=logout&success=true');
+    return res.redirect(`/?action=logout&success=${encodeURIComponent(name)}`);
 });
 
 router.post('/register', async (req, res) => {
@@ -111,7 +112,7 @@ router.post('/register', async (req, res) => {
         from: process.env.MAIL_USER,
         to: result.login,
         subject: "Szosa Sklep - weryfikacja adresu E-Mail",
-        html: `<h1>Dziękujemy za rejestrację!</h1><p><a href="http://localhost:3000/auth/verify?code=${verificationCode}">Zweryfikuj swój adres E-mail klikając w ten link!</a></p>`
+        html: `<h1>Dziękujemy za rejestrację!</h1><p><a href="${process.env.HOME_URL}/auth/verify?code=${verificationCode}">Zweryfikuj swój adres E-mail klikając w ten link!</a></p>`
     }
 
     const mailSent = await sendMail(mailOptions);
@@ -127,7 +128,7 @@ router.get('/verify', async (req, res) => {
     const code = req.query.code;
 
     if(!code) {
-        return res.redirect('/?action=verify&success=false');
+        return res.redirect(`/?action=verify&error=${errors.notFound}`);
     }
 
     let verification;
@@ -136,7 +137,7 @@ router.get('/verify', async (req, res) => {
         verification = await getVerification({ code });
     } catch(error) {
         logger.error(error);
-        return res.redirect('/?action=verify&success=false');
+        return res.redirect(`/?action=verify&error=${error.appCode}`);
     }
 
     let user;
@@ -145,7 +146,7 @@ router.get('/verify', async (req, res) => {
         user = await getUserByLogin({ login: verification.login });
     } catch(error) {
         logger.error(error);
-        return res.redirect('/?action=verify&success=false');
+        return res.redirect(`/?action=verify&error=${error.appCode}`);
     }
 
     user.verified = true;
@@ -156,7 +157,7 @@ router.get('/verify', async (req, res) => {
         updatedUser = await updateUser({ user });
     } catch(error) {
         logger.error(error);
-        return res.redirect('/?action=verify&success=false');
+        return res.redirect(`/?action=verify&error=${error.appCode}`);
     }
 
     if(req.session.user) {
@@ -169,7 +170,7 @@ router.get('/verify', async (req, res) => {
         logger.error(`Failed to remove verified user's verification record (ID ${verification.id}): ${error}`);
     }
 
-    return res.redirect('/?action=verify&success=true');
+    return res.redirect(`/?action=verify&success=${encodeURIComponent(req.session.user.login)}`);
 });
 
 router.post('/delete-account', async (req, res) => {

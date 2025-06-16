@@ -40,6 +40,8 @@
                     </div>
 
                     <div id="password-info" class="text-red display-none" style="margin-bottom: 10px;"></div>
+                    <p id="error-invalid-data" style="color: red; display: none;"><i class="icon-attention"></i> Podano niepoprawne dane!</p>
+                    <p id="error-already-exists" style="color: red; display: none;"><i class="icon-attention"></i> Taki użytkownik już istnieje!</p>
 
                     <button id="submit">Zarejestruj się</button>
                 </form>
@@ -50,6 +52,10 @@
             const users = JSON.parse('<%- JSON.stringify(users) %>');
         </script>
 
-        <script src="js/register-form.js"></script>
+        <script src="<%= path %>js/register-form.js"></script>
+
+        <%- include('../includes/footer'); %>
+
+        <script src="<%= path %>js/ui-error-handlers/auth/register.js"></script>
     </body> 
 </html>

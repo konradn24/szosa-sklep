@@ -14,7 +14,7 @@
                 <h1 class="header-no-margin">Zamówienia</h1>
                 <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> <a href="/zarzadzanie-sklepem">Zarządzanie sklepem</a> <i class="icon-right-dir"></i> Zamówienia</div>
 
-                <div class="orders-filters">
+                <div class="filters">
                     <label for="user-filter">Użytkownik:</label>
                     <select id="user-filter">
                         <option value="" selected>Wszyscy</option>
@@ -54,5 +54,9 @@
         </script>
 
         <script src="<%= path %>js/orders-list-filter.js"></script>
+
+        <%- include('../../includes/footer'); %>
+
+        <script src="<%= path %>js/ui-error-handlers/admin/orders.js"></script>
     </body>
 </html>

@@ -121,12 +121,12 @@ router.post('/modyfikuj', async (req, res) => {
             const product = await getProduct({ id });
     
             if(product.amount < amount) {
-                logger.error(`Cannot modify product in cart - amount is too much (${currentAmount + amount}/${product.amount})`);
-                return res.redirect(`/koszyk?action=cart-add&error=${errors.invalidData[0]}`);
+                logger.error(`Cannot modify product in cart - amount is too much (${amount}/${product.amount})`);
+                return res.redirect(`/koszyk?action=modify&error=${errors.invalidData[0]}`);
             }
         } catch(error) {
             logger.error(error);
-            return res.redirect(`/koszyk?action=cart-add&error=${error.appCode}`);
+            return res.redirect(`/koszyk?action=modify&error=${error.appCode}`);
         }
 
         req.session.cart[productIndex].amount = amount;

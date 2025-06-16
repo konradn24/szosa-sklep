@@ -16,7 +16,9 @@
                 </div>
 
                 <% if(product.imageUrl) { %>
-                    <img class="image" src="<%= path %>img/uploads/<%= product.imageUrl %>" alt="Obrazek poglądowy dla <%= product.name %>">
+                    <div class="image-container">
+                        <img src="<%= path %>img/uploads/<%= product.imageUrl %>" alt="Obrazek poglądowy dla <%= product.name %>">
+                    </div>
                 <% } %>
 
                 <div class="product-panel">
@@ -52,5 +54,9 @@
                 </div>
             </main>
         </div>
-    </body> 
+
+        <%- include('includes/footer', { path }); %>
+
+        <script src="<%= path %>js/ui-error-handlers/product.js"></script>
+    </body>
 </html>

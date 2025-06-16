@@ -23,7 +23,18 @@
                 <a href="/zarzadzanie-sklepem/zamowienia">
                     <button>Zamówienia</button>
                 </a>
+
+                <h3 style="margin-top: 3rem;">Ilość zamówień: <%= ordersCount %></h3>
+                <h3>Opłacone zamówienia: <%= paidOrdersCount %></h3>
+                <h3>Zrealizowane zamówienia: <%= completedOrdersCount %></h3>
+
+                <h3 style="color: red;">Oczekiwane płatności: <%= (Math.round(toPay * 100) / 100).toFixed(2) %> PLN</h3>
+                <h3 style="color: green;">Otrzymane płatności: <%= (Math.round(paid * 100) / 100).toFixed(2) %> PLN</h3>
             </main>
         </div>
+
+        <%- include('../includes/footer'); %>
+
+        <script src="js/ui-error-handlers/admin/index.js"></script>
     </body> 
 </html>

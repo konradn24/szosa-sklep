@@ -11,16 +11,14 @@
         <%- include('../includes/nav', { user, cart }); %>
 
         <div class="container">
-            <p style="color: red; text-decoration: underline; font-size: 14px;">UWAGA: Ta strona to tylko projekt w celach edukacyjnych! Proszę nie podawać swoich prawdziwych danych.</p>
-
             <main class="text-center">
                 <h1 class="header-no-margin">Dziękujemy za zakup!</h1>
                 <div class="path"><a href="/">Strona główna</a> <i class="icon-right-dir"></i> Podsumowanie zamówienia</div>
             
                 <% if(!user) { %>
-                    <p>Otrzymaliśmy Twoje zamówienie<%= mailSent ? ' i wysłaliśmy E-mail z potwierdzeniem' : '' %>. Wkrótce zweryfikujemy płatność i przejdziemy do realizacji zamówienia. Możesz sprawdzić status swojego zamówienia <a class="text-anchor" href="/zamowienie/<%= order.id %>?login=<%= orderLogin %>">pod tym linkiem</a>.</p>
+                    <p>Otrzymaliśmy Twoje zamówienie<%= mailSent ? ' i wysłaliśmy E-mail z potwierdzeniem' : '' %>. Wkrótce zweryfikujemy płatność i przejdziemy do realizacji zamówienia. Możesz sprawdzić status swojego zamówienia <a class="text-anchor" href="/moje-konto/zamowienie?id=<%= order.id %>&login=<%= encodeURIComponent(orderLogin) %>">pod tym linkiem</a>.</p>
                 <% } else { %>
-                    <p>Otrzymaliśmy Twoje zamówienie<%= mailSent ? ' i wysłaliśmy E-mail z potwierdzeniem' : '' %>. Wkrótce zweryfikujemy płatność i przejdziemy do realizacji zamówienia. Możesz sprawdzić status swojego zamówienia w <a class="text-anchor" href="/moje-konto/historia">historii zamówień</a> oraz <a class="text-anchor" href="/zamowienie/<%= order.id %>?login=<%= orderLogin %>">pod tym linkiem</a>.</p>
+                    <p>Otrzymaliśmy Twoje zamówienie<%= mailSent ? ' i wysłaliśmy E-mail z potwierdzeniem' : '' %>. Wkrótce zweryfikujemy płatność i przejdziemy do realizacji zamówienia. Możesz sprawdzić status swojego zamówienia w <a class="text-anchor" href="/moje-konto">historii zamówień</a> oraz <a class="text-anchor" href="/moje-konto/zamowienie?id=<%= order.id %>">pod tym linkiem</a>.</p>
                 <% } %>
 
                 <div class="list cart-list">
@@ -31,7 +29,10 @@
                         <div class="row-space-between">
                             <div>
                                 <a class="text-anchor d-block row" style="text-decoration: none;" href="/produkt/<%= product.url %>">
-                                    <img src="/img/<%= product.imageUrl ? `uploads/${product.imageUrl}` : 'default.jpg' %>" alt="Obrazek poglądowy produktu">
+                                    <div class="item-image-container">
+                                        <img src="/img/<%= product.imageUrl ? `uploads/${product.imageUrl}` : 'default.jpg' %>" alt="Obrazek poglądowy produktu">
+                                    </div>
+                                    
                                     <div class="product-info">
                                         <div class="item-title"><%= product.name %> <i>(<%= orderCart[i].amount %>)</i></div>
                                         <div class="item-property"><b><%= product.price %> PLN</b></div>
@@ -67,14 +68,20 @@
                     <% } %>
                 </div>
 
-                <a href="/" style="display: block; margin: 20px 0;"><button>Powrót na stronę główną</button></a>
+                <% if(user) { %>
+                    <a href="/moje-konto/zamowienia" style="display: block; margin: 2rem 0;"><button>Zobacz wszystkie zamówienia</button></a>
+                <% } %>
+
+                <a href="/" style="display: block; margin: 1rem 0;"><button>Powrót na stronę główną</button></a>
             </main>
         </div>
 
-        <% if(!mailSent) { %>
-            <script>
-                // Show error popup
-            </script>
-        <% } %>
+        <%- include('../includes/footer'); %>
+
+        <script>
+            const mailSent = '<%= mailSent %>' === 'true';
+        </script>
+
+        <script src="<%= path %>js/ui-error-handlers/order/summary.js"></script>
     </body> 
 </html>

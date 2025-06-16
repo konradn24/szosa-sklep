@@ -1,9 +1,15 @@
-.image {
-    display: block;
+.image-container {
     width: 40%;
+    margin: 20px auto;
+}
+
+.image-container img {
+    display: block;
+    width: auto;
     height: auto;
+    max-width: 100%;
+    max-height: 400px;
     margin: 0 auto;
-    margin-top: 20px;
 }
 
 .product-panel {
